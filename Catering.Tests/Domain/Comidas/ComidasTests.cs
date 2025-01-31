@@ -8,6 +8,7 @@ namespace Catering.Tests.Domain.Comidas
     {
         private string _nombre = "Comida 1";
         private Guid _idOrdenTrabajo = Guid.NewGuid();
+        private Guid _idReceta = Guid.NewGuid();
         private Guid _ingrediente1 = Guid.NewGuid();
         private int _ingredientes1Cantidad = 1;
         private Guid _ingrediente2 = Guid.NewGuid();
@@ -37,9 +38,9 @@ namespace Catering.Tests.Domain.Comidas
             // Arrange
             List<RecetaIngrediente> ingredientes = new List<RecetaIngrediente>
             {
-                new RecetaIngrediente(_ingrediente1, "", _ingredientes1Cantidad),
-                new RecetaIngrediente(_ingrediente2, "", _ingredientes2Cantidad),
-                new RecetaIngrediente(_ingrediente3, "", _ingredientes3Cantidad)
+                new RecetaIngrediente(_idReceta, _ingrediente1, "", _ingredientes1Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente2, "", _ingredientes2Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente3, "", _ingredientes3Cantidad)
             };
 
             // Act
@@ -59,9 +60,9 @@ namespace Catering.Tests.Domain.Comidas
             // Arrange
             List<RecetaIngrediente> ingredientes = new List<RecetaIngrediente>
             {
-                new RecetaIngrediente(_ingrediente1, "", _ingredientes1Cantidad),
-                new RecetaIngrediente(_ingrediente2, "", _ingredientes2Cantidad),
-                new RecetaIngrediente(_ingrediente3, "", _ingredientes3Cantidad)
+                new RecetaIngrediente(_idReceta, _ingrediente1, "", _ingredientes1Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente2, "", _ingredientes2Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente3, "", _ingredientes3Cantidad)
             };
 
             // Act
@@ -82,9 +83,9 @@ namespace Catering.Tests.Domain.Comidas
             // Arrange
             List<RecetaIngrediente> ingredientes = new List<RecetaIngrediente>
             {
-                new RecetaIngrediente(_ingrediente1, "", _ingredientes1Cantidad),
-                new RecetaIngrediente(_ingrediente2, "", _ingredientes2Cantidad),
-                new RecetaIngrediente(_ingrediente3, "", _ingredientes3Cantidad)
+                new RecetaIngrediente(_idReceta, _ingrediente1, "", _ingredientes1Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente2, "", _ingredientes2Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente3, "", _ingredientes3Cantidad)
             };
 
             // Act

@@ -9,12 +9,14 @@ namespace Catering.Domain.Recetas
 {
     public class RecetaIngrediente : Entity
     {
+        public Guid IdReceta { get; private set; }
         public Guid IdIngrediente { get; private set; }
         public string Detalle { get; private set; }
         public RecetaIngredienteCantidad Cantidad { get; private set; }
 
-        public RecetaIngrediente(Guid idIngrediente, string detalle, float cantidad) : base(Guid.NewGuid())
+        public RecetaIngrediente(Guid idReceta, Guid idIngrediente, string detalle, float cantidad) : base(Guid.NewGuid())
         {
+            IdReceta = idReceta;
             IdIngrediente = idIngrediente;
             Detalle = detalle;
             Cantidad = cantidad;

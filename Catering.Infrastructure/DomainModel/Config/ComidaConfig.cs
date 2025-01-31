@@ -1,4 +1,6 @@
-﻿using Catering.Domain.Comidas;
+﻿using Catering.Domain.Clientes;
+using Catering.Domain.Comidas;
+using Catering.Domain.OrdenesTrabajo;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
@@ -35,10 +37,21 @@ namespace Catering.Infrastructure.DomainModel.Config
                  .HasColumnName("Estado");
 
             builder.Property(x => x.IdCliente)
-                 .HasColumnName("IdCliente");
+                 .HasColumnName("IdCliente")
+                 .IsRequired(false);
 
             builder.Property(x => x.IdOrdenTrabajo)
                  .HasColumnName("IdOrdenTrabajo");
+
+            builder.HasOne<Cliente>()
+                .WithMany()
+                .HasForeignKey(x => x.IdCliente)
+                .HasConstraintName("FK_Comida_Cliente");
+
+            builder.HasOne<OrdenTrabajo>()
+                .WithMany()
+                .HasForeignKey(x => x.IdOrdenTrabajo)
+                .HasConstraintName("FK_Comida_OrdenTrabajo");
 
             builder.Ignore("_domainEvents");
             builder.Ignore(x => x.DomainEvents);

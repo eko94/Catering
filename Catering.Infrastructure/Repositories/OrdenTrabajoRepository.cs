@@ -38,7 +38,7 @@ namespace Catering.Infrastructure.Repositories
             }
             else
             {
-                return await _dbContext.OrdenTrabajo.FindAsync(id);
+                return await _dbContext.OrdenTrabajo.Include("_comidasList").Include("_clientesList").SingleOrDefaultAsync(x => x.Id == id);
             }
         }
 

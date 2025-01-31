@@ -15,14 +15,16 @@ namespace Catering.Application.Receta.EventHandlers
     public record PrepararRecetaCuandoOrdenTrabajoEnPreparacionHandler : INotificationHandler<OrdenTrabajoEnPreparacionEvent>
     {
         private readonly IRecetaRepository _recetaRepository;
+        private readonly IComidaRepository _comidaRepository;
         private readonly IOrdenTrabajoRepository _ordenTrabajoRepository;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PrepararRecetaCuandoOrdenTrabajoEnPreparacionHandler(IRecetaRepository recetaRepository, IOrdenTrabajoRepository ordenTrabajoRepository, IUnitOfWork unitOfWork)
+        public PrepararRecetaCuandoOrdenTrabajoEnPreparacionHandler(IRecetaRepository recetaRepository, IOrdenTrabajoRepository ordenTrabajoRepository, IUnitOfWork unitOfWork, IComidaRepository comidaRepository)
         {
             _recetaRepository = recetaRepository;            
             _ordenTrabajoRepository = ordenTrabajoRepository;
             _unitOfWork = unitOfWork;
+            _comidaRepository = comidaRepository;
         }
 
         public async Task Handle(OrdenTrabajoEnPreparacionEvent domainEvent, CancellationToken cancellationToken)
@@ -42,10 +44,14 @@ namespace Catering.Application.Receta.EventHandlers
             var comidas = new List<Comida>();
             for(var i = 0; i < domainEvent.Cantidad; i++)
             {
-                comidas.Add(receta.PrepararReceta(domainEvent.IdOrdenTrabajo));
+                var comida = receta.PrepararReceta(domainEvent.IdOrdenTrabajo);
+                comidas.Add(comida);
+                await _comidaRepository.AddAsync(comida);
             }
 
             ordenTrabajo.SetComidasPreparadas(comidas);
+
+            await _ordenTrabajoRepository.UpdateAsync(ordenTrabajo);
 
             await _unitOfWork.CommitAsync(cancellationToken);
         }

@@ -57,9 +57,15 @@ namespace Catering.Infrastructure.DomainModel.Config
                  .HasConversion(typeConverter)
                  .HasColumnName("Tipo");
 
-            builder.HasMany(typeof(Comida), "_comidasList");
+            builder.HasMany(typeof(Comida), "_comidasList")
+                .WithOne()
+                .HasForeignKey("IdOrdenTrabajo")
+                .HasConstraintName("FK_Comida_OrdenTrabajo");
 
-            builder.HasMany(typeof(OrdenTrabajoCliente), "_clientesList");
+            builder.HasMany(typeof(OrdenTrabajoCliente), "_clientesList")
+                .WithOne()
+                .HasForeignKey("IdOrdenTrabajo")
+                .HasConstraintName("FK_OrdenTrabajoCliente_OrdenTrabajo");
 
             builder.Property(x => x.FechaCreado)
                 .HasColumnName("FechaCreado");
@@ -84,6 +90,12 @@ namespace Catering.Infrastructure.DomainModel.Config
 
             builder.Property(x => x.IdCliente)
                  .HasColumnName("IdCliente");
+
+            builder.HasOne<OrdenTrabajo>()
+                .WithMany()
+                .HasForeignKey(x => x.IdOrdenTrabajo)
+                .HasConstraintName("FK_OrdenTrabajoCliente_OrdenTrabajo");
+
 
             builder.Ignore("_domainEvents");
             builder.Ignore(x => x.DomainEvents);

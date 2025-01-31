@@ -1,4 +1,5 @@
 ﻿using Catering.Domain.Comidas;
+using Catering.Domain.Ingredientes;
 using Catering.Domain.OrdenesTrabajo;
 using Catering.Domain.Recetas;
 using Microsoft.EntityFrameworkCore;
@@ -28,11 +29,15 @@ namespace Catering.Infrastructure.DomainModel.Config
             builder.Property(x => x.Nombre)
                 .HasColumnName("Nombre");
 
-            builder.HasMany(typeof(RecetaIngrediente), "_ingredientesList");
+            builder.HasMany(typeof(RecetaIngrediente), "_ingredientesList")
+                .WithOne()
+                .HasForeignKey("IdReceta")
+                .HasConstraintName("FK_RecetaIngrediente_Receta");
 
-            builder.HasMany(typeof(RecetaInstruccion), "_instruccionesList");            
-
-            builder.HasMany(typeof(Comida), "_comidasList");
+            builder.HasMany(typeof(RecetaInstruccion), "_instruccionesList")
+                .WithOne()
+                .HasForeignKey("IdReceta")
+                .HasConstraintName("FK_RecetaInstruccion_Receta");
 
             builder.Ignore("_domainEvents");
             builder.Ignore(x => x.DomainEvents);
@@ -47,6 +52,12 @@ namespace Catering.Infrastructure.DomainModel.Config
             builder.Property(x => x.Id)
                 .HasColumnName("IdRecetaIngrediente");
 
+            builder.Property(x => x.IdReceta)
+                .HasColumnName("IdReceta");
+
+            builder.Property(x => x.IdIngrediente)
+                .HasColumnName("IdIngrediente");
+
             builder.Property(x => x.Detalle)
                 .HasColumnName("Detalle");
 
@@ -58,6 +69,16 @@ namespace Catering.Infrastructure.DomainModel.Config
             builder.Property(x => x.Cantidad)
                 .HasConversion(quantityConverter)
                 .HasColumnName("Cantidad");
+
+            builder.HasOne<Receta>()
+                .WithMany()
+                .HasForeignKey(x => x.IdReceta)
+                .HasConstraintName("FK_RecetaIngrediente_Receta");
+
+            builder.HasOne<Ingrediente>()
+                .WithMany()
+                .HasForeignKey(x => x.IdIngrediente)
+                .HasConstraintName("FK_RecetaIngrediente_Ingrediente");
 
             builder.Ignore("_domainEvents");
             builder.Ignore(x => x.DomainEvents);
@@ -72,8 +93,16 @@ namespace Catering.Infrastructure.DomainModel.Config
             builder.Property(x => x.Id)
                 .HasColumnName("IdRecetaInstruccion");
 
+            builder.Property(x => x.IdReceta)
+                .HasColumnName("IdReceta");
+
             builder.Property(x => x.Instruccion)
                 .HasColumnName("Instruccion");
+
+            builder.HasOne<Receta>()
+                .WithMany()
+                .HasForeignKey(x => x.IdReceta)
+                .HasConstraintName("FK_RecetaInstruccion_Receta");
 
             builder.Ignore("_domainEvents");
             builder.Ignore(x => x.DomainEvents);

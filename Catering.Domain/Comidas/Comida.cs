@@ -12,14 +12,14 @@ namespace Catering.Domain.Comidas
     {
         public string Nombre { get; private set; }
         public ComidaStatus Estado { get; private set; }
-        public Guid IdCliente { get; private set; }
+        public Guid? IdCliente { get; private set; }
         public Guid IdOrdenTrabajo { get; private set; }
 
         public Comida(string nombre, Guid idOrdenTrabajo) : base(Guid.NewGuid())
         {
             Nombre = nombre;
             Estado = ComidaStatus.PorPreparar;
-            IdCliente = Guid.Empty;
+            IdCliente = default;
             IdOrdenTrabajo = idOrdenTrabajo;
         }
 

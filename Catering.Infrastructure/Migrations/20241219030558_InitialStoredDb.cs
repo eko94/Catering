@@ -145,7 +145,7 @@ namespace Catering.Infrastructure.Migrations
                     IdComida = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nombre = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Estado = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false),
-                    IdCliente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdCliente = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     IdOrdenTrabajo = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>

@@ -8,12 +8,10 @@ namespace Catering.Domain.Recetas
     {
         private List<RecetaInstruccion> _instruccionesList;
         private List<RecetaIngrediente> _ingredientesList;
-        private List<Comida> _comidasList;
 
         public string Nombre { get; private set; }
         public ICollection<RecetaIngrediente> Ingredientes { get => _ingredientesList; }
         public ICollection<RecetaInstruccion> Instrucciones { get => _instruccionesList; }
-        public ICollection<Comida> Comidas { get => _comidasList; }
 
         public Receta(Guid id, string nombre) : base(id)
         {
@@ -48,7 +46,7 @@ namespace Catering.Domain.Recetas
                 throw new ArgumentNullException("Cantidad no puede ser menor o igual a 0");
             }
 
-            RecetaIngrediente IngredienteReceta = new RecetaIngrediente(idIngrediente, detalle, cantidad);
+            RecetaIngrediente IngredienteReceta = new RecetaIngrediente(Id, idIngrediente, detalle, cantidad);
             _ingredientesList.Add(IngredienteReceta);
         }
 
