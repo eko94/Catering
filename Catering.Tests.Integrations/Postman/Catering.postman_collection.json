@@ -1,0 +1,516 @@
+{
+	"info": {
+		"_postman_id": "26399cce-d6d7-4a26-944e-5bb13523fe42",
+		"name": "Catering",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "41693204"
+	},
+	"item": [
+		{
+			"name": "Ordenes Trabajo",
+			"item": [
+				{
+					"name": "Generar Orden Completa",
+					"item": [
+						{
+							"name": "Crear Orden",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Guarda IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"\r",
+											"    pm.collectionVariables.set(\"IdOrdenTrabajo\", responseBody);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idUsuarioCocinero\": {{$randomUUID}},\r\n  \"idReceta\": {{$randomUUID}},\r\n  \"cantidad\": {{$randomInt}},\r\n  \"clientes\": [\r\n    {{$randomUUID}},\r\n    {{$randomUUID}}\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Preparar Receta",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{IdOrdenTrabajo}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo/preparar-receta",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo",
+										"preparar-receta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empaquetar Comidas",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar IdOrdenTrabajo preparado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{IdOrdenTrabajo}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo/empaquetar-comidas",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo",
+										"empaquetar-comidas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Etiquetar Comidas",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar IdOrdenTrabajo empaquetado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{IdOrdenTrabajo}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo/etiquetar-comidas",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo",
+										"etiquetar-comidas"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Genera un Orden de Trabajo completa, es decir, pasa por todos los estados necesario hasta llegar a Finalizado."
+				},
+				{
+					"name": "Cancelar Orden",
+					"item": [
+						{
+							"name": "Crear Orden",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Guarda IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"\r",
+											"    pm.collectionVariables.set(\"IdOrdenTrabajo\", responseBody);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idUsuarioCocinero\": {{$randomUUID}},\r\n  \"idReceta\": {{$randomUUID}},\r\n  \"cantidad\": {{$randomInt}},\r\n  \"clientes\": [\r\n    {{$randomUUID}},\r\n    {{$randomUUID}}\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancelar Orden",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{IdOrdenTrabajo}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo/cancelar-orden",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo",
+										"cancelar-orden"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Cancelar una Orden de Trabajo en estado Creado."
+				},
+				{
+					"name": "Empaquetar Comida sin Preparar Receta",
+					"item": [
+						{
+							"name": "Crear Orden",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Guarda IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"\r",
+											"    pm.collectionVariables.set(\"IdOrdenTrabajo\", responseBody);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idUsuarioCocinero\": {{$randomUUID}},\r\n  \"idReceta\": {{$randomUUID}},\r\n  \"cantidad\": {{$randomInt}},\r\n  \"clientes\": [\r\n    {{$randomUUID}},\r\n    {{$randomUUID}}\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Empaquetar Comidas",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{IdOrdenTrabajo}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo/empaquetar-comidas",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo",
+										"empaquetar-comidas"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Debería de dar un error de validación cuando se intente \"Empaquetar Comidas\" sin haber realizado \"Prepara Receta\""
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BaseAddress",
+			"value": "http://localhost:5142/api",
+			"type": "string"
+		},
+		{
+			"key": "IdOrdenTrabajo",
+			"value": "0",
+			"type": "string"
+		}
+	]
+}
