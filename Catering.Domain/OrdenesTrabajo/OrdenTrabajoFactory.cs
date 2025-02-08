@@ -30,7 +30,7 @@ namespace Catering.Domain.OrdenesTrabajo
                 throw new ArgumentException("Lista de clientes debe ser mayor a 1", nameof(clientes));
             }
 
-            return new OrdenTrabajo(idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
+            return new OrdenTrabajo(Guid.NewGuid(), idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
         }
     }
 }

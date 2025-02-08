@@ -26,7 +26,7 @@ namespace Catering.Domain.OrdenesTrabajo
         public DateTime FechaCreado { get; private set; }
 
 
-        public OrdenTrabajo(Guid idUsuarioCocinero, Guid idReceta, int cantidad, OrdenTrabajoType tipo, List<Guid> clientes) : base(Guid.NewGuid())
+        public OrdenTrabajo(Guid id, Guid idUsuarioCocinero, Guid idReceta, int cantidad, OrdenTrabajoType tipo, List<Guid> clientes) : base(id)
         {
             IdUsuarioCocinero = idUsuarioCocinero;
             IdReceta = idReceta;

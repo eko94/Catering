@@ -21,7 +21,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             // Arrange
 
             // Act
-            var ordenTrabajo = new OrdenTrabajo(_idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
+            var ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), _idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
 
             // Assert
             Assert.Equal(_idUsuarioCocinero, ordenTrabajo.IdUsuarioCocinero);
@@ -39,7 +39,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             // Arrange
 
             // Act
-            var ordenTrabajo = new OrdenTrabajo(_idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
+            var ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), _idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
             ordenTrabajo.PrepararReceta();
 
             // Assert
@@ -58,7 +58,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             // Arrange
 
             // Act
-            var ordenTrabajo = new OrdenTrabajo(_idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
+            var ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), _idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
             ordenTrabajo.PrepararReceta();//TODO: DomainEvent?
             ordenTrabajo.EmpaquetarComidas();
 
@@ -78,7 +78,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             // Arrange
 
             // Act
-            var ordenTrabajo = new OrdenTrabajo(_idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
+            var ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), _idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
             ordenTrabajo.PrepararReceta();
             ordenTrabajo.EmpaquetarComidas();//TODO: DomainEvent?
             ordenTrabajo.EtiquetarComidas();
@@ -99,7 +99,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             // Arrange
 
             // Act
-            var ordenTrabajo = new OrdenTrabajo(_idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
+            var ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), _idUsuarioCocinero, _idReceta, _cantidad, _tipo, _clientes);
             ordenTrabajo.CancelarOrden();
 
             // Assert

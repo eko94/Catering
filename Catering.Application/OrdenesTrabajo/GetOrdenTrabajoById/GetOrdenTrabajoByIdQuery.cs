@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Catering.Application.OrdenesTrabajo.GetOrdenTrabajoById
 {
-    public record GetOrdenTrabajoByIdQuery(Guid id) : IRequest<IEnumerable<GetOrdenTrabajoByIdDto>>;
+    public record GetOrdenTrabajoByIdQuery(Guid id) : IRequest<GetOrdenTrabajoByIdDto?>;
 }

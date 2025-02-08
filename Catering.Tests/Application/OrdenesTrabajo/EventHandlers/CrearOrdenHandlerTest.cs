@@ -66,7 +66,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
 
 
             int cantidad = 1;
-            OrdenTrabajo ordenTrabajo = new OrdenTrabajo(idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
+            OrdenTrabajo ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
 
             _ordenTrabajoFactory.Setup(x => x.CreateOrdenTrabajo(idUsuarioCocinero, idReceta, cantidad, clientes))
                 .Returns(ordenTrabajo);
