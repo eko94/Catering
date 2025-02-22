@@ -17,14 +17,16 @@ namespace Catering.Application.Receta.EventHandlers
         private readonly IRecetaRepository _recetaRepository;
         private readonly IComidaRepository _comidaRepository;
         private readonly IOrdenTrabajoRepository _ordenTrabajoRepository;
+        private readonly IComidaFactory _comidaFactory;
         private readonly IUnitOfWork _unitOfWork;
 
-        public PrepararRecetaCuandoOrdenTrabajoEnPreparacionHandler(IRecetaRepository recetaRepository, IOrdenTrabajoRepository ordenTrabajoRepository, IUnitOfWork unitOfWork, IComidaRepository comidaRepository)
+        public PrepararRecetaCuandoOrdenTrabajoEnPreparacionHandler(IRecetaRepository recetaRepository, IOrdenTrabajoRepository ordenTrabajoRepository, IUnitOfWork unitOfWork, IComidaRepository comidaRepository, IComidaFactory comidaFactory)
         {
             _recetaRepository = recetaRepository;            
             _ordenTrabajoRepository = ordenTrabajoRepository;
             _unitOfWork = unitOfWork;
             _comidaRepository = comidaRepository;
+            _comidaFactory = comidaFactory;
         }
 
         public async Task Handle(OrdenTrabajoEnPreparacionEvent domainEvent, CancellationToken cancellationToken)
@@ -43,8 +45,9 @@ namespace Catering.Application.Receta.EventHandlers
 
             var comidas = new List<Comida>();
             for(var i = 0; i < domainEvent.Cantidad; i++)
-            {
-                var comida = receta.PrepararReceta(domainEvent.IdOrdenTrabajo);
+            {                
+                var comida = _comidaFactory.CreateComida(receta.Nombre, domainEvent.IdOrdenTrabajo);
+                comida.Preparar(receta.Ingredientes.ToList());
                 comidas.Add(comida);
                 await _comidaRepository.AddAsync(comida);
             }

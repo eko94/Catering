@@ -19,24 +19,24 @@ namespace Catering.Infrastructure.StoredModel.Entities
         [Required]
         [Column("Nombre")]
         [StringLength(250)]
-        public string Nombre { get; private set; }
+        public string Nombre { get; set; }
 
         [Required]
         [Column("Medicion")]
         [StringLength(250)]
-        public string Medicion { get; private set; }
+        public string Medicion { get; set; }
 
         [Required]
         [Column("Tipo")]
         [StringLength(250)]
-        public string Tipo { get; private set; }
+        public string Tipo { get; set; }
 
         [Required]
         [Column("CostoCompra", TypeName = "decimal(18,2)")]
-        public decimal CostoCompra { get; private set; }
+        public decimal CostoCompra { get; set; }
 
         [Required]
         [Column("CostoVenta", TypeName = "decimal(18,2)")]
-        public decimal CostoVenta { get; private set; }
+        public decimal CostoVenta { get; set; }
     }
 }

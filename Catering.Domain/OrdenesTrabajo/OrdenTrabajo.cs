@@ -19,10 +19,10 @@ namespace Catering.Domain.OrdenesTrabajo
         public OrdenTrabajoCantidad Cantidad { get; private set; }
         public OrdenTrabajoStatus Estado { get; private set; }
         public OrdenTrabajoType Tipo { get; private set; }
-        private List<Comida> _comidasList;
-        public ICollection<Comida> Comidas { get => _comidasList; }
-        private List<OrdenTrabajoCliente> _clientesList;
-        public ICollection<OrdenTrabajoCliente> Clientes { get => _clientesList; }
+        private List<Comida>? _comidasList { get; set; }
+        public ICollection<Comida> Comidas { get { return _comidasList; } }
+        private List<OrdenTrabajoCliente>? _clientesList { get; set; }
+        public ICollection<OrdenTrabajoCliente> Clientes { get { return _clientesList; } }
         public DateTime FechaCreado { get; private set; }
 
 
@@ -104,14 +104,14 @@ namespace Catering.Domain.OrdenesTrabajo
 
         public void CancelarOrden()
         {
-            if (Estado != OrdenTrabajoStatus.Creado)
-            {
-                throw new InvalidOperationException($"Solo se puede cancelar cuando el orden de trabajo de está en estado {nameof(OrdenTrabajoStatus.Creado)}");
-            }
             if (Estado == OrdenTrabajoStatus.Cancelado)
             {
                 throw new InvalidOperationException($"El orden de trabajo ya se encuentra {nameof(OrdenTrabajoStatus.Cancelado)}");
-            }            
+            }
+            if (Estado != OrdenTrabajoStatus.Creado)
+            {
+                throw new InvalidOperationException($"Solo se puede cancelar cuando el orden de trabajo de está en estado {nameof(OrdenTrabajoStatus.Creado)}");
+            }       
 
             Estado = OrdenTrabajoStatus.Cancelado;
         }

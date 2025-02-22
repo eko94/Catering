@@ -10,6 +10,6 @@ namespace Catering.Domain.Comidas
 {
     public interface IComidaFactory
     {
-        Comida CreateComida(Guid id, string nombre);
+        Comida CreateComida(string nombre, Guid idOrdenTrabajo);
     }
 }

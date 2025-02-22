@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Catering.Application\Catering.Application.csproj" />
     <ProjectReference Include="..\Catering.Domain\Catering.Domain.csproj" />
+    <ProjectReference Include="..\Catering.Infrastructure\Catering.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

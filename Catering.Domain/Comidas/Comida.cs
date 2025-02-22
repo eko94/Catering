@@ -15,7 +15,7 @@ namespace Catering.Domain.Comidas
         public Guid? IdCliente { get; private set; }
         public Guid IdOrdenTrabajo { get; private set; }
 
-        public Comida(string nombre, Guid idOrdenTrabajo) : base(Guid.NewGuid())
+        public Comida(Guid id, string nombre, Guid idOrdenTrabajo) : base(id)
         {
             Nombre = nombre;
             Estado = ComidaStatus.PorPreparar;

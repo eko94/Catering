@@ -43,15 +43,15 @@ namespace Catering.Infrastructure.DomainModel.Config
             builder.Property(x => x.IdOrdenTrabajo)
                  .HasColumnName("IdOrdenTrabajo");
 
-            builder.HasOne<Cliente>()
-                .WithMany()
-                .HasForeignKey(x => x.IdCliente)
-                .HasConstraintName("FK_Comida_Cliente");
+            //builder.HasOne<Cliente>()
+            //    .WithMany()
+            //    .HasForeignKey(x => x.IdCliente)
+            //    .HasConstraintName("FK_Comida_Cliente_IdCliente");
 
-            builder.HasOne<OrdenTrabajo>()
-                .WithMany()
-                .HasForeignKey(x => x.IdOrdenTrabajo)
-                .HasConstraintName("FK_Comida_OrdenTrabajo");
+            //builder.HasOne<OrdenTrabajo>()
+            //    .WithMany()
+            //    .HasForeignKey(x => x.IdOrdenTrabajo)
+            //    .HasConstraintName("FK_Comida_OrdenTrabajo_IdOrdenTrabajo");
 
             builder.Ignore("_domainEvents");
             builder.Ignore(x => x.DomainEvents);

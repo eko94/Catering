@@ -29,6 +29,10 @@ namespace Catering.Domain.OrdenesTrabajo
             {
                 throw new ArgumentException("Lista de clientes debe ser mayor a 1", nameof(clientes));
             }
+            if (cantidad != clientes.Count)
+            {
+                throw new ArgumentException("Cantidad no debe ser mayor a la lista de clientes", nameof(cantidad));
+            }
 
             return new OrdenTrabajo(Guid.NewGuid(), idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
         }

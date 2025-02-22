@@ -17,7 +17,7 @@ namespace Catering.Domain.Ingredientes
         public CostValue CostoCompra { get; private set; }
         public CostValue CostoVenta { get; private set; }
 
-        public Ingrediente(string nombre, string medicion, string tipo) :base(Guid.NewGuid()) 
+        public Ingrediente(Guid id, string nombre, string medicion, string tipo) : base(id) 
         {
             Nombre = nombre;
             Medicion = medicion;
@@ -28,15 +28,15 @@ namespace Catering.Domain.Ingredientes
 
         public void UpdateIngrediente(string nombre, string medicion, string tipo, decimal costoCompra, decimal costoVenta)
         {
-            if (!string.IsNullOrEmpty(nombre))
+            if (string.IsNullOrEmpty(nombre))
             {
                 throw new ArgumentNullException("Nombre no puede ser nulo", nameof(nombre));
             }
-            if (!string.IsNullOrEmpty(medicion))
+            if (string.IsNullOrEmpty(medicion))
             {
                 throw new ArgumentNullException("Medición no puede ser nulo", nameof(medicion));
             }
-            if (!string.IsNullOrEmpty(tipo))
+            if (string.IsNullOrEmpty(tipo))
             {
                 throw new ArgumentNullException("Tipo no puede ser nulo", nameof(tipo));
             }

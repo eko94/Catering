@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Catering.Infrastructure.Migrations
 {
     /// <inheritdoc />
@@ -71,7 +73,7 @@ namespace Catering.Infrastructure.Migrations
                     IdReceta = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     IdIngrediente = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Detalle = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Cantidad = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                    Cantidad = table.Column<double>(type: "float", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,8 +157,7 @@ namespace Catering.Infrastructure.Migrations
                         name: "FK_Comida_Cliente_IdCliente",
                         column: x => x.IdCliente,
                         principalTable: "Cliente",
-                        principalColumn: "IdCliente",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "IdCliente");
                     table.ForeignKey(
                         name: "FK_Comida_OrdenTrabajo_IdOrdenTrabajo",
                         column: x => x.IdOrdenTrabajo,
@@ -188,6 +189,66 @@ namespace Catering.Infrastructure.Migrations
                         principalTable: "OrdenTrabajo",
                         principalColumn: "IdOrdenTrabajo",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Cliente",
+                columns: new[] { "IdCliente", "Nombre" },
+                values: new object[,]
+                {
+                    { new Guid("9b971b55-e539-4939-9240-825a48402329"), "Cliente 1" },
+                    { new Guid("a71010c7-979b-4217-a899-c1c3d8179f4a"), "Cliente 2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Ingrediente",
+                columns: new[] { "IdIngrediente", "CostoCompra", "CostoVenta", "Medicion", "Nombre", "Tipo" },
+                values: new object[,]
+                {
+                    { new Guid("74998d4d-4271-46df-a900-e3c8bcb9020a"), 10.0m, 15.0m, "kg", "Ingrediente 1", "Tipo 1" },
+                    { new Guid("c4ea1fa6-d21a-46b7-b1a0-cf9f2934ec50"), 5.0m, 8.0m, "litro", "Ingrediente 2", "Tipo 2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Receta",
+                columns: new[] { "IdReceta", "Nombre" },
+                values: new object[,]
+                {
+                    { new Guid("38b29f41-0757-4f98-af43-84394606eb03"), "Receta 1" },
+                    { new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227"), "Receta 2" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Usuario",
+                columns: new[] { "IdUsuario", "Nombre" },
+                values: new object[,]
+                {
+                    { new Guid("76084be0-b170-44e8-a302-a4b7b34927d6"), "Usuario cocinero 2" },
+                    { new Guid("d19a0e52-cf2a-45cb-a99f-7343afb296b4"), "Usuario cocinero 1" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RecetaIngrediente",
+                columns: new[] { "IdRecetaIngrediente", "Cantidad", "Detalle", "IdIngrediente", "IdReceta" },
+                values: new object[,]
+                {
+                    { new Guid("75afd017-50b3-4feb-9aa1-6a0cc574da16"), 1.0, "", new Guid("74998d4d-4271-46df-a900-e3c8bcb9020a"), new Guid("38b29f41-0757-4f98-af43-84394606eb03") },
+                    { new Guid("779f2031-c59a-4d99-a579-3b30fbc9d454"), 1.0, "", new Guid("74998d4d-4271-46df-a900-e3c8bcb9020a"), new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227") },
+                    { new Guid("85c16f52-56c3-4dba-ad45-ea4f5fe47cc4"), 2.0, "", new Guid("c4ea1fa6-d21a-46b7-b1a0-cf9f2934ec50"), new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227") },
+                    { new Guid("d390daf8-4432-4789-8620-a3f40713dfe4"), 2.0, "", new Guid("c4ea1fa6-d21a-46b7-b1a0-cf9f2934ec50"), new Guid("38b29f41-0757-4f98-af43-84394606eb03") }
+                });
+
+            migrationBuilder.InsertData(
+                table: "RecetaInstruccion",
+                columns: new[] { "IdRecetaInstruccion", "IdReceta", "Instruccion" },
+                values: new object[,]
+                {
+                    { new Guid("1e055008-742c-4c3b-901b-f371156bfead"), new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227"), "Instruccion 3" },
+                    { new Guid("47eda952-9d17-45e6-a91d-7126290d8912"), new Guid("38b29f41-0757-4f98-af43-84394606eb03"), "Instruccion 2" },
+                    { new Guid("840c14b1-2aab-44b5-ba2e-336a17a4c38c"), new Guid("38b29f41-0757-4f98-af43-84394606eb03"), "Instruccion 1" },
+                    { new Guid("880fabc1-fc37-4940-8126-45f4ea076c00"), new Guid("38b29f41-0757-4f98-af43-84394606eb03"), "Instruccion 3" },
+                    { new Guid("99d49146-f040-4f66-b86b-237fec692687"), new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227"), "Instruccion 1" },
+                    { new Guid("9b37bd7e-4cf2-4a38-b9bf-cc047d6d52c1"), new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227"), "Instruccion 2" }
                 });
 
             migrationBuilder.CreateIndex(

@@ -130,18 +130,7 @@ namespace Catering.Domain.Recetas
             }
             _instruccionesList.Remove(recetaInstruccion);
         }
-        #endregion Instruciones
-
-        /// <summary>
-        /// Prepara la comida de la receta.
-        /// </summary>
-        /// <returns>Comida en estado Preparado.</returns>
-        public Comida PrepararReceta(Guid idOrdenTrabajo)
-        {
-            var comida = new Comida(Nombre, idOrdenTrabajo);
-            comida.Preparar(_ingredientesList);
-            return comida;
-        }
+        #endregion Instruciones        
 
         /// <summary>
         /// Needed for EF

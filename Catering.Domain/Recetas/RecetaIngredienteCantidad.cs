@@ -8,9 +8,9 @@ namespace Catering.Domain.Recetas
 {
     public record RecetaIngredienteCantidad
     {
-        public float Value { get; set; }
+        public double Value { get; set; }
 
-        public RecetaIngredienteCantidad(float value)
+        public RecetaIngredienteCantidad(double value)
         {
             if (value <= 0)
             {
@@ -19,12 +19,12 @@ namespace Catering.Domain.Recetas
             Value = value;
         }
 
-        public static implicit operator float(RecetaIngredienteCantidad cantidad)
+        public static implicit operator double(RecetaIngredienteCantidad cantidad)
         {
             return cantidad == null ? 0 : cantidad.Value;
         }
 
-        public static implicit operator RecetaIngredienteCantidad(float a)
+        public static implicit operator RecetaIngredienteCantidad(double a)
         {
             return new RecetaIngredienteCantidad(a);
         }

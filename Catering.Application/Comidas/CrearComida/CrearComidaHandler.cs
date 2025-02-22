@@ -26,7 +26,7 @@ namespace Catering.Application.Comidas.CrearComida
 
         public async Task<Guid> Handle(CrearComidaCommand request, CancellationToken cancellationToken)
         {
-            var comida = _comidaFactory.CreateComida(request.id, request.nombre);
+            var comida = _comidaFactory.CreateComida(request.nombre, request.idOrdenTrabajo);
 
             await _comidaRepository.AddAsync(comida);
 

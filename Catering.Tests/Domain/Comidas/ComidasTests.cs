@@ -6,6 +6,7 @@ namespace Catering.Tests.Domain.Comidas
 {
     public class ComidasTests
     {
+        Guid _idComida = Guid.NewGuid();
         private string _nombre = "Comida 1";
         private Guid _idOrdenTrabajo = Guid.NewGuid();
         private Guid _idReceta = Guid.NewGuid();
@@ -20,15 +21,16 @@ namespace Catering.Tests.Domain.Comidas
         [Fact]
         public void CreacionComidaEsValido()
         {
-            // Arrange
+            // Arrange            
 
             // Act
-            var comida = new Comida(_nombre, _idOrdenTrabajo);
+            var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
 
             // Assert
+            Assert.Equal(_idComida, comida.Id);
             Assert.Equal(_nombre, comida.Nombre);
             Assert.Equal(ComidaStatus.PorPreparar, comida.Estado);
-            Assert.Equal(Guid.Empty, comida.IdCliente);
+            Assert.Equal(null, comida.IdCliente);
             Assert.Equal(_idOrdenTrabajo, comida.IdOrdenTrabajo);
         }
 
@@ -44,13 +46,14 @@ namespace Catering.Tests.Domain.Comidas
             };
 
             // Act
-            var comida = new Comida(_nombre, _idOrdenTrabajo);
+            var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
             comida.Preparar(ingredientes);
 
             // Assert
+            Assert.Equal(_idComida, comida.Id);
             Assert.Equal(_nombre, comida.Nombre);
             Assert.Equal(ComidaStatus.Preparado, comida.Estado);
-            Assert.Equal(Guid.Empty, comida.IdCliente);
+            Assert.Equal(null, comida.IdCliente);
             Assert.Equal(_idOrdenTrabajo, comida.IdOrdenTrabajo);
         }
 
@@ -66,15 +69,35 @@ namespace Catering.Tests.Domain.Comidas
             };
 
             // Act
-            var comida = new Comida(_nombre, _idOrdenTrabajo);
+            var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
             comida.Preparar(ingredientes);
             comida.Empaquetar();
 
             // Assert
+            Assert.Equal(_idComida, comida.Id);
             Assert.Equal(_nombre, comida.Nombre);
             Assert.Equal(ComidaStatus.Empaquetado, comida.Estado);
-            Assert.Equal(Guid.Empty, comida.IdCliente);
+            Assert.Equal(null, comida.IdCliente);
             Assert.Equal(_idOrdenTrabajo, comida.IdOrdenTrabajo);
+        }
+
+        [Fact]
+        public void EmpaquetarComidaEsInvalido()
+        {
+            // Arrange
+            List<RecetaIngrediente> ingredientes = new List<RecetaIngrediente>
+            {
+                new RecetaIngrediente(_idReceta, _ingrediente1, "", _ingredientes1Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente2, "", _ingredientes2Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente3, "", _ingredientes3Cantidad)
+            };
+
+            // Act
+            var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
+            Action act = () => comida.Empaquetar();
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(act);
         }
 
         [Fact]
@@ -89,16 +112,37 @@ namespace Catering.Tests.Domain.Comidas
             };
 
             // Act
-            var comida = new Comida(_nombre, _idOrdenTrabajo);
+            var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
             comida.Preparar(ingredientes);
             comida.Empaquetar();
             comida.Etiquetar(_idCliente);
 
             // Assert
+            Assert.Equal(_idComida, comida.Id);
             Assert.Equal(_nombre, comida.Nombre);
             Assert.Equal(ComidaStatus.Etiquetado, comida.Estado);
             Assert.Equal(_idCliente, comida.IdCliente);
             Assert.Equal(_idOrdenTrabajo, comida.IdOrdenTrabajo);
+        }
+
+        [Fact]
+        public void EtiquetarComidaEsInvalido()
+        {
+            // Arrange
+            List<RecetaIngrediente> ingredientes = new List<RecetaIngrediente>
+            {
+                new RecetaIngrediente(_idReceta, _ingrediente1, "", _ingredientes1Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente2, "", _ingredientes2Cantidad),
+                new RecetaIngrediente(_idReceta, _ingrediente3, "", _ingredientes3Cantidad)
+            };
+
+            // Act
+            var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
+            comida.Preparar(ingredientes);
+            Action act = () => comida.Etiquetar(_idCliente);
+
+            // Assert
+            Assert.Throws<InvalidOperationException>(act);
         }
     }
 }

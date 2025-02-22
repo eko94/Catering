@@ -23,8 +23,8 @@ namespace Catering.Infrastructure.StoredModel.Entities
         [Required]
         public string Nombre { get; set; }
 
-        public ICollection<RecetaIngredienteStoredModel>? Ingredientes { get; set; }
+        public ICollection<RecetaIngredienteStoredModel>? Ingredientes { get; set; } = new List<RecetaIngredienteStoredModel>();
 
-        public ICollection<RecetaInstruccionStoredModel>? Instrucciones { get; set; }
+        public ICollection<RecetaInstruccionStoredModel>? Instrucciones { get; set; } = new List<RecetaInstruccionStoredModel>();
     }
 }

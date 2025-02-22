@@ -28,10 +28,10 @@ namespace Catering.Infrastructure.StoredModel.Entities
 
         [Column("Detalle")]
         [StringLength(250)]
-        public string Detalle { get; private set; }
+        public string Detalle { get; set; }
 
         [Required]
-        [Column("Cantidad", TypeName = "decimal(18,2)")]
-        public float Cantidad { get; private set; }
+        [Column("Cantidad", TypeName = "float")]
+        public double Cantidad { get; set; }
     }
 }

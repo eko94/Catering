@@ -26,17 +26,17 @@ namespace Catering.Application.Receta.AddIngredienteReceta
 
         public async Task<Guid> Handle(AddIngredienteRecetaCommand request, CancellationToken cancellationToken)
         {
-            var orden = await _recetaRepository.GetByIdAsync(request.idReceta);
+            var receta = await _recetaRepository.GetByIdAsync(request.idReceta);
 
-            if (orden == null) throw new Exception("Receta no puede ser nulo para agregar el ingrediente");
+            if (receta == null) throw new Exception("Receta no puede ser nulo para agregar el ingrediente");
 
-            orden.AddIngrediente(request.idIngrediente, request.detalle, request.cantidad);
+            receta.AddIngrediente(request.idIngrediente, request.detalle, request.cantidad);
 
-            await _recetaRepository.UpdateAsync(orden);
+            await _recetaRepository.UpdateAsync(receta);
 
             await _unitOfWork.CommitAsync(cancellationToken);
 
-            return orden.Id;
+            return receta.Id;
         }
     }
 }

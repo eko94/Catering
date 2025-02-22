@@ -14,7 +14,7 @@ namespace Catering.Domain.Recetas
         public string Detalle { get; private set; }
         public RecetaIngredienteCantidad Cantidad { get; private set; }
 
-        public RecetaIngrediente(Guid idReceta, Guid idIngrediente, string detalle, float cantidad) : base(Guid.NewGuid())
+        public RecetaIngrediente(Guid idReceta, Guid idIngrediente, string detalle, double cantidad) : base(Guid.NewGuid())
         {
             IdReceta = idReceta;
             IdIngrediente = idIngrediente;
@@ -22,15 +22,11 @@ namespace Catering.Domain.Recetas
             Cantidad = cantidad;
         }
 
-        public void Update(Guid idIngrediente, string detalle, float cantidad)
+        public void Update(Guid idIngrediente, string detalle, double cantidad)
         {
             if (idIngrediente == Guid.Empty)
             {
                 throw new ArgumentNullException("Ingrediente no puede ser vacío");
-            }
-            if (string.IsNullOrEmpty(detalle))
-            {
-                throw new ArgumentNullException("Detalle no puede ser nulo");
             }
             if (cantidad <= 0)
             {

@@ -57,15 +57,17 @@ namespace Catering.Infrastructure.DomainModel.Config
                  .HasConversion(typeConverter)
                  .HasColumnName("Tipo");
 
-            builder.HasMany(typeof(Comida), "_comidasList")
+            builder
+                .HasMany(typeof(Comida), "_comidasList")
                 .WithOne()
                 .HasForeignKey("IdOrdenTrabajo")
-                .HasConstraintName("FK_Comida_OrdenTrabajo");
+                .HasConstraintName("FK_Comida_OrdenTrabajo_IdOrdenTrabajo");
 
-            builder.HasMany(typeof(OrdenTrabajoCliente), "_clientesList")
+            builder
+                .HasMany(typeof(OrdenTrabajoCliente), "_clientesList")
                 .WithOne()
                 .HasForeignKey("IdOrdenTrabajo")
-                .HasConstraintName("FK_OrdenTrabajoCliente_OrdenTrabajo");
+                .HasConstraintName("FK_OrdenTrabajoCliente_OrdenTrabajo_IdOrdenTrabajo");
 
             builder.Property(x => x.FechaCreado)
                 .HasColumnName("FechaCreado");
@@ -91,10 +93,15 @@ namespace Catering.Infrastructure.DomainModel.Config
             builder.Property(x => x.IdCliente)
                  .HasColumnName("IdCliente");
 
-            builder.HasOne<OrdenTrabajo>()
-                .WithMany()
-                .HasForeignKey(x => x.IdOrdenTrabajo)
-                .HasConstraintName("FK_OrdenTrabajoCliente_OrdenTrabajo");
+            //builder.HasOne<Cliente>()
+            //    .WithMany()
+            //    .HasForeignKey(x => x.IdCliente)
+            //    .HasConstraintName("FK_OrdenTrabajoCliente_Cliente_IdCliente");
+
+            //builder.HasOne<OrdenTrabajo>()
+            //    .WithMany()
+            //    .HasForeignKey(x => x.IdOrdenTrabajo)
+            //    .HasConstraintName("FK_OrdenTrabajoCliente_OrdenTrabajo_IdOrdenTrabajo");
 
 
             builder.Ignore("_domainEvents");

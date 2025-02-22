@@ -45,8 +45,8 @@ namespace Catering.Infrastructure.StoredModel.Entities
         [Column("FechaCreado")]
         public DateTime FechaCreado { get; set; }
 
-        public ICollection<ComidaStoredModel>? Comidas { get; set; }
+        public ICollection<ComidaStoredModel>? Comidas { get; set; } = new List<ComidaStoredModel>();
 
-        public ICollection<OrdenTrabajoClienteStoredModel>? Clientes { get; set; }
+        public ICollection<OrdenTrabajoClienteStoredModel>? Clientes { get; set; } = new List<OrdenTrabajoClienteStoredModel>();
     }
 }

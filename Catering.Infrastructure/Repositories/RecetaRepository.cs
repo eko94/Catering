@@ -38,7 +38,10 @@ namespace Catering.Infrastructure.Repositories
             }
             else
             {
-                return await _dbContext.Receta.FindAsync(id);
+                return await _dbContext.Receta
+                    .Include("_instruccionesList")
+                    .Include("_ingredientesList")
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
         }
 

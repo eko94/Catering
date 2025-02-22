@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Catering.Application.Comidas.CrearComida
 {
-    public record CrearComidaCommand(Guid id, string nombre) : IRequest<Guid>;
+    public record CrearComidaCommand(string nombre, Guid idOrdenTrabajo) : IRequest<Guid>;
 }
