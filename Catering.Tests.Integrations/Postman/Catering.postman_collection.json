@@ -16,16 +16,6 @@
 							"name": "Crear Orden",
 							"event": [
 								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
 									"listen": "test",
 									"script": {
 										"exec": [
@@ -33,13 +23,24 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Guarda IdOrdenTrabajo creado\", function() {\r",
+											"pm.test(\"Guarda IdOrdenTrabajo creado\", function () {\r",
 											"    const responseBody = pm.response.json();\r",
-											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    const guidRegex = new RegExp(\"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\");\r",
 											"    pm.expect(responseBody).to.match(guidRegex);\r",
 											"\r",
 											"    pm.collectionVariables.set(\"IdOrdenTrabajo\", responseBody);\r",
-											"});"
+											"});\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -51,7 +52,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"idUsuarioCocinero\": {{$randomUUID}},\r\n  \"idReceta\": {{$randomUUID}},\r\n  \"cantidad\": {{$randomInt}},\r\n  \"clientes\": [\r\n    {{$randomUUID}},\r\n    {{$randomUUID}}\r\n  ]\r\n}",
+									"raw": "{\r\n  \"idUsuarioCocinero\": \"{{IdUsuarioCocinero}}\",\r\n  \"idReceta\": \"{{IdReceta}}\",\r\n  \"cantidad\": 1,\r\n  \"clientes\": [\r\n    \"{{IdCliente1}}\"\r\n  ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -78,9 +79,9 @@
 									"script": {
 										"exec": [
 											"pm.test(\"Verificar IdOrdenTrabajo creado\", function() {\r",
-											"    const responseBody = pm.response.json();\r",
-											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
-											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"    const idOrdenTrabajo = pm.collectionVariables.get(\"IdOrdenTrabajo\");\r",
+											"    const guidRegex = new RegExp(\"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\");\r",
+											"    pm.expect(idOrdenTrabajo).to.match(guidRegex);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -133,9 +134,9 @@
 									"script": {
 										"exec": [
 											"pm.test(\"Verificar IdOrdenTrabajo preparado\", function() {\r",
-											"    const responseBody = pm.response.json();\r",
-											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
-											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"    const idOrdenTrabajo = pm.collectionVariables.get(\"IdOrdenTrabajo\");\r",
+											"    const guidRegex = new RegExp(\"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\");\r",
+											"    pm.expect(idOrdenTrabajo).to.match(guidRegex);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -188,9 +189,9 @@
 									"script": {
 										"exec": [
 											"pm.test(\"Verificar IdOrdenTrabajo empaquetado\", function() {\r",
-											"    const responseBody = pm.response.json();\r",
-											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
-											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"    const idOrdenTrabajo = pm.collectionVariables.get(\"IdOrdenTrabajo\");\r",
+											"    const guidRegex = new RegExp(\"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\");\r",
+											"    pm.expect(idOrdenTrabajo).to.match(guidRegex);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -239,7 +240,7 @@
 					"description": "Genera un Orden de Trabajo completa, es decir, pasa por todos los estados necesario hasta llegar a Finalizado."
 				},
 				{
-					"name": "Cancelar Orden",
+					"name": "Cancelar Orden correctamente",
 					"item": [
 						{
 							"name": "Crear Orden",
@@ -262,9 +263,9 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Guarda IdOrdenTrabajo creado\", function() {\r",
+											"pm.test(\"Guarda IdOrdenTrabajo creado\", function () {\r",
 											"    const responseBody = pm.response.json();\r",
-											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    const guidRegex = new RegExp(\"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\");\r",
 											"    pm.expect(responseBody).to.match(guidRegex);\r",
 											"\r",
 											"    pm.collectionVariables.set(\"IdOrdenTrabajo\", responseBody);\r",
@@ -280,7 +281,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"idUsuarioCocinero\": {{$randomUUID}},\r\n  \"idReceta\": {{$randomUUID}},\r\n  \"cantidad\": {{$randomInt}},\r\n  \"clientes\": [\r\n    {{$randomUUID}},\r\n    {{$randomUUID}}\r\n  ]\r\n}",
+									"raw": "{\r\n  \"idUsuarioCocinero\": \"{{IdUsuarioCocinero}}\",\r\n  \"idReceta\": \"{{IdReceta}}\",\r\n  \"cantidad\": 1,\r\n  \"clientes\": [\r\n    \"{{IdCliente1}}\"\r\n  ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -358,6 +359,180 @@
 					"description": "Cancelar una Orden de Trabajo en estado Creado."
 				},
 				{
+					"name": "Cancelar Orden en Estado Preparado",
+					"item": [
+						{
+							"name": "Crear Orden",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Guarda IdOrdenTrabajo creado\", function () {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = new RegExp(\"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\");\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"\r",
+											"    pm.collectionVariables.set(\"IdOrdenTrabajo\", responseBody);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"idUsuarioCocinero\": \"{{IdUsuarioCocinero}}\",\r\n  \"idReceta\": \"{{IdReceta}}\",\r\n  \"cantidad\": 1,\r\n  \"clientes\": [\r\n    \"{{IdCliente1}}\"\r\n  ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Preparar Receta",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{IdOrdenTrabajo}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo/preparar-receta",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo",
+										"preparar-receta"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancelar Orden",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											"pm.test(\"Verificar IdOrdenTrabajo creado\", function() {\r",
+											"    const responseBody = pm.response.json();\r",
+											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    pm.expect(responseBody).to.match(guidRegex);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code es 500\", function () {\r",
+											"    pm.response.to.have.status(500);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n  \"id\": \"{{IdOrdenTrabajo}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BaseAddress}}/OrdenTrabajo/cancelar-orden",
+									"host": [
+										"{{BaseAddress}}"
+									],
+									"path": [
+										"OrdenTrabajo",
+										"cancelar-orden"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "Cancelar una Orden de Trabajo en estado Creado."
+				},
+				{
 					"name": "Empaquetar Comida sin Preparar Receta",
 					"item": [
 						{
@@ -381,9 +556,9 @@
 											"    pm.response.to.have.status(200);\r",
 											"});\r",
 											"\r",
-											"pm.test(\"Guarda IdOrdenTrabajo creado\", function() {\r",
+											"pm.test(\"Guarda IdOrdenTrabajo creado\", function () {\r",
 											"    const responseBody = pm.response.json();\r",
-											"    const guidRegex = \"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\";\r",
+											"    const guidRegex = new RegExp(\"[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}\");\r",
 											"    pm.expect(responseBody).to.match(guidRegex);\r",
 											"\r",
 											"    pm.collectionVariables.set(\"IdOrdenTrabajo\", responseBody);\r",
@@ -399,7 +574,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n  \"idUsuarioCocinero\": {{$randomUUID}},\r\n  \"idReceta\": {{$randomUUID}},\r\n  \"cantidad\": {{$randomInt}},\r\n  \"clientes\": [\r\n    {{$randomUUID}},\r\n    {{$randomUUID}}\r\n  ]\r\n}",
+									"raw": "{\r\n  \"idUsuarioCocinero\": \"{{IdUsuarioCocinero}}\",\r\n  \"idReceta\": \"{{IdReceta}}\",\r\n  \"cantidad\": 1,\r\n  \"clientes\": [\r\n    \"{{IdCliente1}}\"\r\n  ]\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -510,6 +685,21 @@
 		{
 			"key": "IdOrdenTrabajo",
 			"value": "0",
+			"type": "string"
+		},
+		{
+			"key": "IdUsuarioCocinero",
+			"value": "d19a0e52-cf2a-45cb-a99f-7343afb296b4",
+			"type": "string"
+		},
+		{
+			"key": "IdReceta",
+			"value": "38B29F41-0757-4F98-AF43-84394606EB03",
+			"type": "string"
+		},
+		{
+			"key": "IdCliente1",
+			"value": "9b971b55-e539-4939-9240-825a48402329",
 			"type": "string"
 		}
 	]
