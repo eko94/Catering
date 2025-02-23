@@ -15,7 +15,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
     {
         private Guid _idUsuarioCocinero = Guid.NewGuid();
         private Guid _idReceta = Guid.NewGuid();
-        private int _cantidad = 1;
+        private int _cantidad = 2;
         private OrdenTrabajoType _tipo = OrdenTrabajoType.Comida;
         private List<Guid> _clientes = new List<Guid>
         {
