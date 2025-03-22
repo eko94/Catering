@@ -1,0 +1,5 @@
+IF DB_ID('Catering') IS NOT NULL
+	RETURN;
+
+CREATE DATABASE [Catering]
+GO

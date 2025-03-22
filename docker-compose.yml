@@ -1,0 +1,36 @@
+services:
+  catering:
+    image: eko1394/catering:1.0.0
+    ports:
+      - 8080:8080
+    depends_on:
+      - catering-db
+    networks:
+      - catering-net    
+    restart: on-failure
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost:8080/swagger"]
+        interval: 15s
+        timeout: 10s
+        retries: 3
+        start_period: 45s
+  catering-db:
+    image: eko1394/catering-db:1.0.0
+    ports:
+      - 1433:1433
+    volumes:
+      - catering-db-data:/var/opt/mssql
+    networks:
+      - catering-net
+    restart: on-failure
+    environment:
+      SA_PASSWORD: "${SA_PASSWORD}"
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-U", "sa", "-P" , "${SA_PASSWORD}", "-Q", "select 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+volumes:
+  catering-db-data:
+networks:
+  catering-net:
