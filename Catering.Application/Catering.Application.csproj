@@ -18,4 +18,12 @@
     <Folder Include="Ingredientes\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\eijik\source\repos\local\Catering\Catering.Application\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\eijik\source\repos\local\Catering\Catering.Application\.editorconfig" />
+  </ItemGroup>
+
 </Project>
