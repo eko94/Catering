@@ -19,8 +19,6 @@ jobs:
           echo "$KNOWN_HOSTS" > ~/.ssh/known_hosts
           echo "$SSH_KEY" > ~/.ssh/staging.key
           chmod 600 ~/.ssh/staging.key
-          eval "$(ssh-agent -s)"
-          ssh-add - <<< "$SSH_KEY_PASSPHRASE"
           cat >>~/.ssh/config <<END
             Host staging
               HostName $SSH_HOST
