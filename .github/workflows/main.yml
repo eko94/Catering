@@ -32,4 +32,4 @@ jobs:
         run: ssh staging 'cd /var/www/catering/ && bash deploy.sh'
       - name: Start the server
         if: ${{ always() }}
-        run: ssh staging 'sudo systemctl start catering.Service'
+        run: ssh staging 'sudo systemctl start catering.service'
