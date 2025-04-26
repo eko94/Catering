@@ -31,7 +31,7 @@ namespace Catering.WebAPI
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Configure the HTTP request pipeline.
-            //if (env.IsDevelopment())
+            //if (env.IsDevelopment())  2
             //{
                 app.UseSwagger();
                 app.UseSwaggerUI();
