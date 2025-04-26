@@ -26,8 +26,10 @@ jobs:
               IdentityFile ~/.ssh/staging.key
               StrictHostKeyChecking no
           END
+      - name: Stop the server
+        run: ssh staging 'sudo systemctl stop catering.service'
       - name: Do deploy
-        run: ssh staging 'cd /var/www/Catering/ && bash deploy.sh'
+        run: ssh staging 'cd /var/www/catering/ && bash deploy.sh'
       - name: Start the server
         if: ${{ always() }}
-        run: ssh staging 'sudo systemctl start Catering.Service'
+        run: ssh staging 'sudo systemctl start catering.Service'
