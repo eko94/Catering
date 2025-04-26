@@ -35,7 +35,7 @@ namespace Catering.WebAPI.Controllers
         }
 
         [HttpPost]
-        [Route("preparar-receta2")]
+        [Route("preparar-receta")]
         public async Task<IActionResult> PrepararReceta([FromBody] PrepararRecetaCommand command)
         {
             try
