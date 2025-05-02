@@ -1,2 +1,7 @@
-npx lint-staged --relative
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo 'Husky - Format'
+dotnet husky run --name dotnet-format-staged-files
+echo 'Huksy - Test'
 dotnet test Catering.Tests/Catering.Tests.csproj
