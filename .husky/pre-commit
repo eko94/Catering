@@ -1,1 +1,2 @@
 npx lint-staged --relative
+dotnet test Catering.Tests/Catering.Tests.csproj
