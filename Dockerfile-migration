@@ -1,0 +1,18 @@
+# This stage is used to build the service project.
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG BUILD_CONFIGURATION=Release
+WORKDIR /src
+COPY ["Catering.WebAPI/Catering.WebAPI.csproj", "Catering.WebAPI/"]
+COPY ["Catering.Application/Catering.Application.csproj", "Catering.Application/"]
+COPY ["Catering.Domain/Catering.Domain.csproj", "Catering.Domain/"]
+COPY ["Catering.Infrastructure/Catering.Infrastructure.csproj", "Catering.Infrastructure/"]
+RUN dotnet restore "./Catering.WebAPI/Catering.WebAPI.csproj"
+COPY . .
+WORKDIR "/src/Catering.WebAPI"
+RUN dotnet build "./Catering.WebAPI.csproj" -c %BUILD_CONFIGURATION% -o /app/build
+
+# This stage is to update database
+WORKDIR /src
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+ENTRYPOINT [ "dotnet", "ef", "database", "update", "--project", "Catering.Infrastructure", "--startup-project", "Catering.WebAPI", "--context", "StoredDbContext"]

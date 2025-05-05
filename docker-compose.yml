@@ -14,6 +14,12 @@ services:
         timeout: 10s
         retries: 3
         start_period: 45s
+  catering-migration:
+    image: eko1394/catering-migration:1.0.0
+    depends_on:
+      - catering-db
+    networks:
+      - catering-net
   catering-db:
     image: eko1394/catering-db:1.0.0
     ports:
