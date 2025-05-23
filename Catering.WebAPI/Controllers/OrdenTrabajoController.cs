@@ -28,8 +28,9 @@ namespace Catering.WebAPI.Controllers
                 var id = await _mediator.Send(command);
                 return Ok(id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SentrySdk.CaptureException(ex);
                 return StatusCode(500);
             }
         }
@@ -43,8 +44,9 @@ namespace Catering.WebAPI.Controllers
                 var result = await _mediator.Send(command);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SentrySdk.CaptureException(ex);
                 return StatusCode(500);
             }
         }
@@ -58,8 +60,9 @@ namespace Catering.WebAPI.Controllers
                 var result = await _mediator.Send(command);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SentrySdk.CaptureException(ex);
                 return StatusCode(500);
             }
         }
@@ -73,8 +76,9 @@ namespace Catering.WebAPI.Controllers
                 var result = await _mediator.Send(command);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SentrySdk.CaptureException(ex);
                 return StatusCode(500);
             }
         }
@@ -88,8 +92,9 @@ namespace Catering.WebAPI.Controllers
                 var result = await _mediator.Send(command);
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SentrySdk.CaptureException(ex);
                 return StatusCode(500);
             }
         }
@@ -100,11 +105,15 @@ namespace Catering.WebAPI.Controllers
         {
             try
             {
+                var a = 1;
+                var b = 0;
+                var c = a / b;
                 var result = await _mediator.Send(new GetOrdenTrabajoByIdQuery(id));
                 return Ok(result);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                SentrySdk.CaptureException(ex);
                 return StatusCode(500);
             }
         }
