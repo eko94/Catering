@@ -99,6 +99,11 @@ namespace Catering.Domain.OrdenesTrabajo
                 comida.Etiquetar(_clientesList[i].IdCliente);
             }
 
+            List<OrdenTrabajoFinalizadoComida> ordenTrabajoFinalizadoComidas = _comidasList.Select(x => new OrdenTrabajoFinalizadoComida
+                (x.Id, x.Nombre, x.IdCliente.Value)).ToList();
+            OrdenTrabajoFinalizado ordenTrabajoFinalizado = new OrdenTrabajoFinalizado(Id, ordenTrabajoFinalizadoComidas);
+            AddDomainEvent(ordenTrabajoFinalizado);//---2:22:52
+
             Estado = OrdenTrabajoStatus.Finalizado;
         }
 

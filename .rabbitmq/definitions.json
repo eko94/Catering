@@ -1,0 +1,53 @@
+{
+    "vhosts": [{"name": "/"}],
+    "users": [
+        {
+            "name": "admin",
+            "password": "admin",
+            "tags": "administrator"
+        },
+        {
+            "name": "cateringUser",
+            "password": "cateringPassword",
+            "tags": "administrator"
+        }
+    ],
+    "permissions": [
+        {
+            "user": "cateringUser",
+            "vhost": "/",
+            "configure": ".*",
+            "write": ".*",
+            "read": ".*"
+        }
+    ],
+    "parameters": [],
+    "exchanges": [
+        {
+            "name": "orden-trabajo-finalizado",
+            "vhost": "/",
+            "type": "fanout",
+            "durable": true
+        }
+    ],
+    "queues": [
+        {"name": "logistica-orden-trabajo-finalizado", "vhost": "/", "durable": true},
+        {"name": "comercial-orden-trabajo-finalizado", "vhost": "/", "durable": true}
+    ],
+    "bindings": [
+        {
+            "source": "orden-trabajo-finalizado", 
+            "vhost": "/", 
+            "destination": "logistica-orden-trabajo-finalizado", 
+            "destination_type": "queue", 
+            "routing_key": ""
+        },
+        {
+            "source": "orden-trabajo-finalizado", 
+            "vhost": "/", 
+            "destination": "comercial-orden-trabajo-finalizado",
+            "destination_type": "queue", 
+            "routing_key": ""
+        }
+    ]
+}

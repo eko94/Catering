@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catering.Tests.Integrations
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catering.Tests.Contracts.Provider", "Catering.Tests.Contracts.Provider\Catering.Tests.Contracts.Provider.csproj", "{16895BAB-73DA-4849-84C1-81AEF8E6E668}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catering.Integration", "Catering.Integration\Catering.Integration.csproj", "{7EA1BE1E-7E71-DD5B-887A-EB6D6D10DBA2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,8 +53,15 @@ Global
 		{16895BAB-73DA-4849-84C1-81AEF8E6E668}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{16895BAB-73DA-4849-84C1-81AEF8E6E668}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16895BAB-73DA-4849-84C1-81AEF8E6E668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7EA1BE1E-7E71-DD5B-887A-EB6D6D10DBA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7EA1BE1E-7E71-DD5B-887A-EB6D6D10DBA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7EA1BE1E-7E71-DD5B-887A-EB6D6D10DBA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7EA1BE1E-7E71-DD5B-887A-EB6D6D10DBA2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3298FAFB-62DA-4468-A588-AB4C509C74EA}
 	EndGlobalSection
 EndGlobal
