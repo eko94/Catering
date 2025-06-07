@@ -12,16 +12,15 @@ namespace Catering.Integration.EvaluacionNutricional
         public Guid IdPlanAlimentario { get; set; }
         public string Nombre { get; set; }
         public string Tipo { get; set; }
+        public int CantidadDias { get; set; }
 
-        public PlanAlimentarioCreado(Guid idPlanAlimentario, string nombre, string tipo)
+        public PlanAlimentarioCreado(Guid idPlanAlimentario, string nombre, string tipo, int cantidadDias, string? correlationId = null, string? source = null)
+            : base(correlationId, source)
         {
             IdPlanAlimentario = idPlanAlimentario;
             Nombre = nombre;
             Tipo = tipo;
-        }
-
-        public PlanAlimentarioCreado()
-        {
+            CantidadDias = cantidadDias;
         }
     }
 }

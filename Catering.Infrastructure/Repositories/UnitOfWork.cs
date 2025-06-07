@@ -1,11 +1,14 @@
 ﻿using Catering.Domain.Abstractions;
 using Catering.Infrastructure.DomainModel;
+using Joseco.Outbox.Contracts.Model;
+using Joseco.Outbox.EFCore.Persistence;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Immutable;
 
 namespace Catering.Infrastructure.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IOutboxDatabase<DomainEvent>
     {
         private readonly DomainDbContext _dbContext;
         private readonly IMediator _mediator;
@@ -45,14 +48,24 @@ namespace Catering.Infrastructure.Repositories
 
             if (_transactionCount == 1)
             {
-                await _dbContext.SaveChangesAsync(cancellationToken);
+                try
+                {
+                    await _dbContext.SaveChangesAsync(cancellationToken);
+                }
+                catch (Exception ex)
+                {
+                    throw;
+                }
             }
             else
             {
                 _transactionCount--;
             }
+        }
 
-
+        public DbSet<OutboxMessage<DomainEvent>> GetOutboxMessages()
+        {
+            return _dbContext.OutboxMessages;
         }
     }
 }

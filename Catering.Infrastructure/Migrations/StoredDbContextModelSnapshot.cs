@@ -17,7 +17,7 @@ namespace Catering.Infrastructure.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.0")
+                .HasAnnotation("ProductVersion", "9.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -84,6 +84,71 @@ namespace Catering.Infrastructure.Migrations
                     b.HasIndex("IdOrdenTrabajo");
 
                     b.ToTable("Comida");
+                });
+
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.ContratoEntregaCanceladaStoredModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IdContratoEntregaCancelada");
+
+                    b.Property<DateTime>("FechaCancelada")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("FechaCancelada");
+
+                    b.Property<Guid>("IdContrato")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdContrato");
+
+                    b.ToTable("ContratoEntregaCancelada");
+                });
+
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.ContratoStoredModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IdContrato");
+
+                    b.Property<int>("DiasContratados")
+                        .HasColumnType("int")
+                        .HasColumnName("DiasContratados");
+
+                    b.Property<int>("DiasRealizados")
+                        .HasColumnType("int")
+                        .HasColumnName("DiasRealizados");
+
+                    b.Property<string>("Estado")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)")
+                        .HasColumnName("Estado");
+
+                    b.Property<DateTime>("FechaInicio")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("FechaInicio");
+
+                    b.Property<DateTime?>("FechaUltimoRealizado")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("FechaUltimoRealizado");
+
+                    b.Property<Guid>("IdCliente")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdPlanAlimentario")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdCliente");
+
+                    b.HasIndex("IdPlanAlimentario");
+
+                    b.ToTable("Contrato");
                 });
 
             modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.IngredienteStoredModel", b =>
@@ -208,6 +273,60 @@ namespace Catering.Infrastructure.Migrations
                     b.ToTable("OrdenTrabajo");
                 });
 
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.PlanAlimentarioRecetaStoredModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IdPlanAlimentarioReceta");
+
+                    b.Property<int>("Dia")
+                        .HasColumnType("int")
+                        .HasColumnName("Dia");
+
+                    b.Property<Guid>("IdPlanAlimentario")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IdReceta")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdPlanAlimentario");
+
+                    b.HasIndex("IdReceta");
+
+                    b.ToTable("PlanAlimentarioReceta");
+                });
+
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.PlanAlimentarioStoredModel", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("IdPlanAlimentario");
+
+                    b.Property<int>("CantidadDias")
+                        .HasColumnType("int")
+                        .HasColumnName("CantidadDias");
+
+                    b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)")
+                        .HasColumnName("Nombre");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasColumnName("Tipo");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PlanAlimentario");
+                });
+
             modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.RecetaIngredienteStoredModel", b =>
                 {
                     b.Property<Guid>("Id")
@@ -242,7 +361,7 @@ namespace Catering.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("75afd017-50b3-4feb-9aa1-6a0cc574da16"),
+                            Id = new Guid("6c422826-7f4e-4f8c-9121-4e82f1b6507a"),
                             Cantidad = 1.0,
                             Detalle = "",
                             IdIngrediente = new Guid("74998d4d-4271-46df-a900-e3c8bcb9020a"),
@@ -250,7 +369,7 @@ namespace Catering.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("d390daf8-4432-4789-8620-a3f40713dfe4"),
+                            Id = new Guid("01b0110b-61c8-4801-99c0-3620fdc0296b"),
                             Cantidad = 2.0,
                             Detalle = "",
                             IdIngrediente = new Guid("c4ea1fa6-d21a-46b7-b1a0-cf9f2934ec50"),
@@ -258,7 +377,7 @@ namespace Catering.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("779f2031-c59a-4d99-a579-3b30fbc9d454"),
+                            Id = new Guid("11d9ae1f-038b-4333-8be8-d63671975023"),
                             Cantidad = 1.0,
                             Detalle = "",
                             IdIngrediente = new Guid("74998d4d-4271-46df-a900-e3c8bcb9020a"),
@@ -266,7 +385,7 @@ namespace Catering.Infrastructure.Migrations
                         },
                         new
                         {
-                            Id = new Guid("85c16f52-56c3-4dba-ad45-ea4f5fe47cc4"),
+                            Id = new Guid("7cd951f4-3dbc-4722-8ef0-aab8d56f0bb7"),
                             Cantidad = 2.0,
                             Detalle = "",
                             IdIngrediente = new Guid("c4ea1fa6-d21a-46b7-b1a0-cf9f2934ec50"),
@@ -299,37 +418,37 @@ namespace Catering.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("840c14b1-2aab-44b5-ba2e-336a17a4c38c"),
+                            Id = new Guid("00a5eaac-15a9-4347-9179-6042e567f421"),
                             IdReceta = new Guid("38b29f41-0757-4f98-af43-84394606eb03"),
                             Instruccion = "Instruccion 1"
                         },
                         new
                         {
-                            Id = new Guid("47eda952-9d17-45e6-a91d-7126290d8912"),
+                            Id = new Guid("2205017b-20db-4522-b6b2-1046d188a702"),
                             IdReceta = new Guid("38b29f41-0757-4f98-af43-84394606eb03"),
                             Instruccion = "Instruccion 2"
                         },
                         new
                         {
-                            Id = new Guid("880fabc1-fc37-4940-8126-45f4ea076c00"),
+                            Id = new Guid("b34b4bcc-2476-4c71-a961-0b448ce5cdc8"),
                             IdReceta = new Guid("38b29f41-0757-4f98-af43-84394606eb03"),
                             Instruccion = "Instruccion 3"
                         },
                         new
                         {
-                            Id = new Guid("99d49146-f040-4f66-b86b-237fec692687"),
+                            Id = new Guid("76ff085d-2da7-4bb9-bcce-f9f7ccce1f79"),
                             IdReceta = new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227"),
                             Instruccion = "Instruccion 1"
                         },
                         new
                         {
-                            Id = new Guid("9b37bd7e-4cf2-4a38-b9bf-cc047d6d52c1"),
+                            Id = new Guid("b2ef0456-2e9a-4f36-9ce0-064c5265e3d6"),
                             IdReceta = new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227"),
                             Instruccion = "Instruccion 2"
                         },
                         new
                         {
-                            Id = new Guid("1e055008-742c-4c3b-901b-f371156bfead"),
+                            Id = new Guid("2ab2f382-8685-46a4-bc14-51f724a9b812"),
                             IdReceta = new Guid("3d906ea7-e3a3-480d-b2ce-5b4f7586f227"),
                             Instruccion = "Instruccion 3"
                         });
@@ -395,6 +514,51 @@ namespace Catering.Infrastructure.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Joseco.Outbox.Contracts.Model.OutboxMessage<Catering.Domain.Abstractions.DomainEvent>", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("outboxId");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("content");
+
+                    b.Property<string>("CorrelationId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("correlationId");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("created");
+
+                    b.Property<bool>("Processed")
+                        .HasColumnType("bit")
+                        .HasColumnName("processed");
+
+                    b.Property<DateTime?>("ProcessedOn")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("processedOn");
+
+                    b.Property<string>("SpanId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("spanId");
+
+                    b.Property<string>("TraceId")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("traceId");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("outboxMessage", "outbox");
+                });
+
             modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.ComidaStoredModel", b =>
                 {
                     b.HasOne("Catering.Infrastructure.StoredModel.Entities.ClienteStoredModel", "Cliente")
@@ -410,6 +574,36 @@ namespace Catering.Infrastructure.Migrations
                     b.Navigation("Cliente");
 
                     b.Navigation("OrdenTrabajo");
+                });
+
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.ContratoEntregaCanceladaStoredModel", b =>
+                {
+                    b.HasOne("Catering.Infrastructure.StoredModel.Entities.ContratoStoredModel", "Contrato")
+                        .WithMany("EntregasCanceladas")
+                        .HasForeignKey("IdContrato")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Contrato");
+                });
+
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.ContratoStoredModel", b =>
+                {
+                    b.HasOne("Catering.Infrastructure.StoredModel.Entities.ClienteStoredModel", "Cliente")
+                        .WithMany()
+                        .HasForeignKey("IdCliente")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Catering.Infrastructure.StoredModel.Entities.PlanAlimentarioStoredModel", "PlanAlimentario")
+                        .WithMany()
+                        .HasForeignKey("IdPlanAlimentario")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Cliente");
+
+                    b.Navigation("PlanAlimentario");
                 });
 
             modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.OrdenTrabajoClienteStoredModel", b =>
@@ -450,6 +644,25 @@ namespace Catering.Infrastructure.Migrations
                     b.Navigation("UsuarioCocinero");
                 });
 
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.PlanAlimentarioRecetaStoredModel", b =>
+                {
+                    b.HasOne("Catering.Infrastructure.StoredModel.Entities.PlanAlimentarioStoredModel", "PlanAlimentario")
+                        .WithMany("Recetas")
+                        .HasForeignKey("IdPlanAlimentario")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Catering.Infrastructure.StoredModel.Entities.RecetaStoredModel", "Receta")
+                        .WithMany()
+                        .HasForeignKey("IdReceta")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PlanAlimentario");
+
+                    b.Navigation("Receta");
+                });
+
             modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.RecetaIngredienteStoredModel", b =>
                 {
                     b.HasOne("Catering.Infrastructure.StoredModel.Entities.IngredienteStoredModel", "Ingrediente")
@@ -480,11 +693,21 @@ namespace Catering.Infrastructure.Migrations
                     b.Navigation("Receta");
                 });
 
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.ContratoStoredModel", b =>
+                {
+                    b.Navigation("EntregasCanceladas");
+                });
+
             modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.OrdenTrabajoStoredModel", b =>
                 {
                     b.Navigation("Clientes");
 
                     b.Navigation("Comidas");
+                });
+
+            modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.PlanAlimentarioStoredModel", b =>
+                {
+                    b.Navigation("Recetas");
                 });
 
             modelBuilder.Entity("Catering.Infrastructure.StoredModel.Entities.RecetaStoredModel", b =>

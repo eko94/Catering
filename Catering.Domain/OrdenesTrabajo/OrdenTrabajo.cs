@@ -37,12 +37,12 @@ namespace Catering.Domain.OrdenesTrabajo
             _clientesList = clientes.Select(cliente => new OrdenTrabajoCliente(Id, cliente)).ToList();
             FechaCreado = DateTime.Now;
         }
-        
+
 
 
         public void PrepararReceta()
         {
-            if(Estado != OrdenTrabajoStatus.Creado)
+            if (Estado != OrdenTrabajoStatus.Creado)
             {
                 throw new InvalidOperationException($"Solo se puede preparar la receta cuando el orden de trabajo de está en estado {nameof(OrdenTrabajoStatus.Creado)}");
             }
@@ -65,7 +65,7 @@ namespace Catering.Domain.OrdenesTrabajo
 
         public void EmpaquetarComidas()
         {
-            if(Estado != OrdenTrabajoStatus.Preparado)
+            if (Estado != OrdenTrabajoStatus.Preparado)
             {
                 throw new InvalidOperationException($"Solo se puede preparar la receta cuando el orden de trabajo de está en estado {nameof(OrdenTrabajoStatus.Preparado)}");
             }
@@ -102,7 +102,7 @@ namespace Catering.Domain.OrdenesTrabajo
             List<OrdenTrabajoFinalizadoComida> ordenTrabajoFinalizadoComidas = _comidasList.Select(x => new OrdenTrabajoFinalizadoComida
                 (x.Id, x.Nombre, x.IdCliente.Value)).ToList();
             OrdenTrabajoFinalizado ordenTrabajoFinalizado = new OrdenTrabajoFinalizado(Id, ordenTrabajoFinalizadoComidas);
-            AddDomainEvent(ordenTrabajoFinalizado);//---2:22:52
+            AddDomainEvent(ordenTrabajoFinalizado);
 
             Estado = OrdenTrabajoStatus.Finalizado;
         }
@@ -116,7 +116,7 @@ namespace Catering.Domain.OrdenesTrabajo
             if (Estado != OrdenTrabajoStatus.Creado)
             {
                 throw new InvalidOperationException($"Solo se puede cancelar cuando el orden de trabajo de está en estado {nameof(OrdenTrabajoStatus.Creado)}");
-            }       
+            }
 
             Estado = OrdenTrabajoStatus.Cancelado;
         }
@@ -124,6 +124,6 @@ namespace Catering.Domain.OrdenesTrabajo
         /// <summary>
         /// Needed for EF
         /// </summary>
-        private OrdenTrabajo(){ }
+        private OrdenTrabajo() { }
     }
 }

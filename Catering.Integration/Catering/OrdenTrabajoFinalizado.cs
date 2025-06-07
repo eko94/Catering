@@ -9,24 +9,30 @@ namespace Catering.Integration.Catering
 {
     public record OrdenTrabajoFinalizado : IntegrationMessage
     {
-        public Guid Id { get; set; }
+        public Guid IdOrdenTrabajo { get; set; }
         public ICollection<OrdenTrabajoFinalizadoComida> Comidas { get; set; }
 
-        public OrdenTrabajoFinalizado(Guid id, List<OrdenTrabajoFinalizadoComida> comidas)
+        public OrdenTrabajoFinalizado(Guid idOrdenTrabajo, List<OrdenTrabajoFinalizadoComida> comidas, string? correlationId = null, string? source = null)
+            : base(correlationId, source)
         {
-            this.Id = id;
+            this.IdOrdenTrabajo = idOrdenTrabajo;
             this.Comidas = comidas;
-        }
-        public OrdenTrabajoFinalizado()
-        {
-            this.Comidas = new List<OrdenTrabajoFinalizadoComida>();
         }
     }
 
-    public record OrdenTrabajoFinalizadoComida
+    public record OrdenTrabajoFinalizadoComida //: IntegrationMessage
     {
-        public Guid Id { get; set; }
+        public Guid IdComida { get; set; }
         public string Nombre { get; set; }
         public Guid IdCliente { get; set; }
+
+        //public OrdenTrabajoFinalizadoComida(Guid id, string nombre, Guid idCliente, string? correlationId = null, string? source = null)
+        //    : base(correlationId, source)
+        public OrdenTrabajoFinalizadoComida(Guid id, string nombre, Guid idCliente)
+        {
+            this.IdComida = id;
+            this.Nombre = nombre;
+            this.IdCliente = idCliente;
+        }
     }
 }

@@ -6,6 +6,7 @@ using Catering.Domain.Recetas;
 using Catering.Infrastructure.DomainModel;
 using Catering.Infrastructure.DomainModel.Config;
 using Catering.Infrastructure.StoredModel.Entities;
+using Joseco.Outbox.EFCore.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
@@ -20,9 +21,13 @@ namespace Catering.Infrastructure.StoredModel
     {
         public virtual DbSet<ClienteStoredModel> Cliente { get; set; }
         public virtual DbSet<ComidaStoredModel> Comida { get; set; }
+        public virtual DbSet<ContratoStoredModel> Contrato { get; set; }
+        public virtual DbSet<ContratoEntregaCanceladaStoredModel> ContratoEntregaCancelada { get; set; }
         public virtual DbSet<IngredienteStoredModel> Ingrediente { get; set; }
         public virtual DbSet<OrdenTrabajoClienteStoredModel> OrdenTrabajoCliente { get; set; }
         public virtual DbSet<OrdenTrabajoStoredModel> OrdenTrabajo { get; set; }
+        public virtual DbSet<PlanAlimentarioRecetaStoredModel> PlanAlimentarioReceta { get; set; }
+        public virtual DbSet<PlanAlimentarioStoredModel> PlanAlimentario { get; set; }
         public virtual DbSet<RecetaIngredienteStoredModel> RecetaIngrediente { get; set; }
         public virtual DbSet<RecetaInstruccionStoredModel> RecetaInstruccion { get; set; }
         public virtual DbSet<RecetaStoredModel> Receta { get; set; }
@@ -33,7 +38,7 @@ namespace Catering.Infrastructure.StoredModel
         }
 
         public StoredDbContext()
-        {            
+        {
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -41,8 +46,9 @@ namespace Catering.Infrastructure.StoredModel
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {            
-            base.OnModelCreating(modelBuilder);            
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.AddOutboxModel<DomainEvent>();
 
             // Seed data for Cliente
             modelBuilder.Entity<ClienteStoredModel>().HasData(

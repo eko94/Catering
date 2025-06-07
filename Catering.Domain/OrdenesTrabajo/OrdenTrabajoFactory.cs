@@ -19,13 +19,13 @@ namespace Catering.Domain.OrdenesTrabajo
             }
             if (idReceta == Guid.Empty)
             {
-                throw new ArgumentNullException("Receta no puede ser nulo", nameof(idReceta));
+                throw new ArgumentException("Receta no puede ser vacío", nameof(idReceta));
             }
             if (cantidad <= 0)
             {
                 throw new ArgumentException("Cantidad debe ser mayor a 0", nameof(cantidad));
             }
-            if (clientes.Count <= 0)
+            if (clientes == null || clientes.Count <= 0)
             {
                 throw new ArgumentException("Lista de clientes debe ser mayor a 1", nameof(clientes));
             }

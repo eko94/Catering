@@ -7,21 +7,18 @@ using System.Threading.Tasks;
 
 namespace Catering.Integration.Comercial
 {
-    public record ContratoPagado : IntegrationMessage
+    public record CateringContratado : IntegrationMessage
     {
         public Guid IdContrato { get; set; }
+        public Guid IdCliente { get; set; }
         public Guid IdPlanAlimentario { get; set; }
-        public int DiasContratado { get; set; }
-                
-        public ContratoPagado(Guid idContrato, Guid idPlanAlimentario, int diasContratado)
+
+        public CateringContratado(Guid idContrato, Guid idCliente, Guid idPlanAlimentario, string? correlationId = null, string? source = null)
+            : base(correlationId, source)
         {
             IdContrato = idContrato;
+            IdCliente = idCliente;
             IdPlanAlimentario = idPlanAlimentario;
-            DiasContratado = diasContratado;
-        }
-
-        public ContratoPagado()
-        {
         }
     }
 }

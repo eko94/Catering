@@ -1,4 +1,8 @@
-﻿using Joseco.Communication.External.RabbitMQ.Services;
+﻿using Catering.Infrastructure.RabbitMQ.Consumers;
+using Catering.Integration.Comercial;
+using Catering.Integration.EvaluacionNutricional;
+using Catering.Integration.Logistica;
+using Joseco.Communication.External.RabbitMQ.Services;
 using Joseco.CommunicationExternal.RabbitMQ;
 using Microsoft.Extensions.DependencyInjection;
 using Nur.Store2025.Integration.Catalog;
@@ -18,7 +22,10 @@ namespace Catering.Infrastructure.Extensions
             using var serviceProvider = services.BuildServiceProvider();
             var rabbitMqSettings = serviceProvider.GetRequiredService<RabbitMqSettings>();
 
-            services.AddRabbitMQ(rabbitMqSettings);
+            services.AddRabbitMQ(rabbitMqSettings)
+                .AddRabbitMqConsumer<PlanAlimentarioCreado, PlanAlimentarioCreadoConsumer>("catering.plan-alimentario-creado")
+                .AddRabbitMqConsumer<CateringContratado, CateringContratadoConsumer>("catering.catering-contratado")
+                .AddRabbitMqConsumer<EntregaCancelada, EntregaCanceladaConsumer>("catering.entrega-cancelada");
 
             return services;
         }

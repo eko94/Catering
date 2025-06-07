@@ -105,9 +105,6 @@ namespace Catering.WebAPI.Controllers
         {
             try
             {
-                var a = 1;
-                var b = 0;
-                var c = a / b;
                 var result = await _mediator.Send(new GetOrdenTrabajoByIdQuery(id));
                 return Ok(result);
             }
