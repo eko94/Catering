@@ -11,5 +11,6 @@ namespace Catering.Domain.Recetas
     {
         Task UpdateAsync(Receta ordenTrabajo);
         Task DeleteAsync(Guid id);
+        Task<List<Guid>> GetRandomIdRecetas(int cantidad);
     }
 }

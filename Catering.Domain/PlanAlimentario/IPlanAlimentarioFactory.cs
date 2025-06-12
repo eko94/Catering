@@ -9,6 +9,6 @@ namespace Catering.Domain.PlanAlimentario
 {
     public interface IPlanAlimentarioFactory
     {
-        PlanAlimentario CreatePlanAlimentario(Guid idPlanAlimentario, string nombre, string tipo, int cantidadDias);
+        PlanAlimentario CreatePlanAlimentario(Guid idPlanAlimentario, string nombre, string tipo, int cantidadDias, List<Guid> recetas);
     }
 }

@@ -32,23 +32,15 @@ namespace Catering.Infrastructure.Repositories
 
         public async Task<Usuario?> GetByIdAsync(Guid id, bool readOnly = false)
         {
-            try
+            if (readOnly)
             {
-                if (readOnly)
-                {
-                    return await _dbContext.Usuario.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
-                }
-                else
-                {
-                    return await _dbContext.Usuario.FindAsync(id);
-                }
-            }    catch(Exception ex)
+                return await _dbContext.Usuario.AsNoTracking().FirstOrDefaultAsync(i => i.Id == id);
+            }
+            else
             {
-                var asd = ex;
-                throw ex;
+                return await _dbContext.Usuario.FindAsync(id);
             }
         }
-
 
         public Task UpdateAsync(Usuario item)
         {
@@ -56,6 +48,13 @@ namespace Catering.Infrastructure.Repositories
 
             return Task.CompletedTask;
 
+        }
+
+        public async Task<Guid> GetRandomIdCocinero()
+        {
+            return await _dbContext.Usuario.Select(x => x.Id)
+                .OrderBy(x => Guid.NewGuid())
+                .FirstOrDefaultAsync();
         }
     }
 }

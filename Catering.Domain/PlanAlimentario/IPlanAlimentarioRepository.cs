@@ -11,5 +11,7 @@ namespace Catering.Domain.PlanAlimentario
     {
         Task UpdateAsync(PlanAlimentario planAlimentario);
         Task DeleteAsync(Guid id);
+
+        Task AddReceta(PlanAlimentarioReceta planAlimentarioReceta);
     }
 }

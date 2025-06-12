@@ -1,7 +1,4 @@
-﻿using Catering.Domain.Abstractions;
-using Catering.Domain.Contratos;
-using Catering.Domain.OrdenesTrabajo;
-using Catering.Domain.PlanAlimentario;
+﻿using Catering.Domain.Contratos;
 using Catering.Infrastructure.DomainModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -41,17 +38,10 @@ namespace Catering.Infrastructure.Repositories
             }
             else
             {
-                try
-                {
-                    var plan = await _dbContext.Contrato
+                var plan = await _dbContext.Contrato
                     .Include("_entregasCanceladasList")
                     .SingleOrDefaultAsync(x => x.Id == id);
-                    return plan;
-                }
-                catch (Exception ex)
-                {
-                    throw;
-                }
+                return plan;
             }
         }
 

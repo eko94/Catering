@@ -23,6 +23,7 @@ namespace Catering.Infrastructure.Extensions
             var rabbitMqSettings = serviceProvider.GetRequiredService<RabbitMqSettings>();
 
             services.AddRabbitMQ(rabbitMqSettings)
+                .AddRabbitMqConsumer<ClienteCreado, ClienteCreadoConsumer>("catering.cliente-creado")
                 .AddRabbitMqConsumer<PlanAlimentarioCreado, PlanAlimentarioCreadoConsumer>("catering.plan-alimentario-creado")
                 .AddRabbitMqConsumer<CateringContratado, CateringContratadoConsumer>("catering.catering-contratado")
                 .AddRabbitMqConsumer<EntregaCancelada, EntregaCanceladaConsumer>("catering.entrega-cancelada");

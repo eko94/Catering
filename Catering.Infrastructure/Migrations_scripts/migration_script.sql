@@ -1,7 +1,5 @@
 ﻿USE [Catering]
 
-BEGIN TRANSACTION;
-
 IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
     CREATE TABLE [__EFMigrationsHistory] (
@@ -13,6 +11,8 @@ END;
 
 IF (SELECT MigrationId FROM [Catering].[dbo].[__EFMigrationsHistory] WHERE MigrationId = '20250222224817_InitialStoredDb') IS NOT NULL
 	RETURN;
+
+BEGIN TRANSACTION;
 
 CREATE TABLE [Cliente] (
     [IdCliente] uniqueidentifier NOT NULL,

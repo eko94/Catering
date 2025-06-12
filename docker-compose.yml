@@ -36,6 +36,13 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
+  catering-worker:
+    image: eko1394/catering-worker:1.0.0
+    depends_on:
+      - catering-db
+    networks:
+      - catering-net
+    restart: on-failure    
   rabbitmq:
     image: rabbitmq:3.13.7-management
     container_name: rabbitmq

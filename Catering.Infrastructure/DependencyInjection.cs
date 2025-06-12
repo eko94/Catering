@@ -32,25 +32,9 @@ namespace Catering.Infrastructure
                     config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
                 );
 
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            services.AddDbContext<StoredDbContext>(context => context.UseSqlServer(connectionString))
-                .AddDbContext<DomainDbContext>(context => context.UseSqlServer(connectionString));
-
-            services.AddScoped<IClienteRepository, ClienteRepository>()
-                .AddScoped<IComidaRepository, ComidaRepository>()
-                .AddScoped<IContratoRepository, ContratoRepository>()
-                .AddScoped<IIngredienteRepository, IngredienteRepository>()
-                .AddScoped<IOrdenTrabajoRepository, OrdenTrabajoRepository>()
-                .AddScoped<IPlanAlimentarioRepository, PlanAlimentarioRepository>()
-                .AddScoped<IRecetaRepository, RecetaRepository>()
-                .AddScoped<IUsuarioRepository, UsuarioRepository>()
-                .AddScoped<IUnitOfWork, UnitOfWork>()
-
-                .AddScoped<IOutboxDatabase<DomainEvent>, UnitOfWork>()
-                .AddOutbox<DomainEvent>();
-
             services
                 .AddSecrets(configuration)
+                .AddDatabase(configuration)
                 .AddRabbitMQ()
                 .AddObservability();
 

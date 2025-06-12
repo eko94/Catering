@@ -45,6 +45,20 @@ namespace Catering.Infrastructure.Repositories
             }
         }
 
+        public async Task<List<Guid>> GetRandomIdRecetas(int cantidad)
+        {
+            List<Guid> ids = new List<Guid>();
+            while (ids.Count < cantidad)
+            {
+                var cantidadFaltante = cantidad - ids.Count;
+                var idList = await _dbContext.Receta.Select(x => x.Id)
+                    .OrderBy(x => Guid.NewGuid())
+                    .Take(cantidadFaltante)
+                    .ToListAsync();
+                ids.AddRange(idList);
+            }
+            return ids;
+        }
 
         public Task UpdateAsync(Receta item)
         {

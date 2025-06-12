@@ -1,4 +1,5 @@
-﻿using Catering.Domain.Comidas;
+﻿using Catering.Domain.Clientes;
+using Catering.Domain.Comidas;
 using Catering.Domain.Contratos;
 using Catering.Domain.OrdenesTrabajo;
 using Catering.Domain.PlanAlimentario;
@@ -20,6 +21,7 @@ namespace Catering.Application
             );
 
             services.AddSingleton<IComidaFactory, ComidaFactory>();
+            services.AddSingleton<IClienteFactory, ClienteFactory>();
             services.AddSingleton<IContratoFactory, ContratoFactory>();
             services.AddSingleton<IOrdenTrabajoFactory, OrdenTrabajoFactory>();
             services.AddSingleton<IPlanAlimentarioFactory, PlanAlimentarioFactory>();

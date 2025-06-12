@@ -8,7 +8,7 @@ namespace Catering.Domain.PlanAlimentario
 {
     public class PlanAlimentarioFactory : IPlanAlimentarioFactory
     {
-        public PlanAlimentario CreatePlanAlimentario(Guid idPlanAlimentario, string nombre, string tipo, int cantidadDias)
+        public PlanAlimentario CreatePlanAlimentario(Guid idPlanAlimentario, string nombre, string tipo, int cantidadDias, List<Guid> recetas)
         {
             if (idPlanAlimentario == Guid.Empty)
             {
@@ -26,8 +26,14 @@ namespace Catering.Domain.PlanAlimentario
             {
                 throw new ArgumentException("La cantidad de días debe ser mayor a 0", nameof(cantidadDias));
             }
+            if (recetas == null || !recetas.Any() || recetas.Count != cantidadDias)
+            {
+                throw new ArgumentException("El plan alimentario debe tener la misma cantidad de recetas a la cantidad de días", nameof(recetas));
+            }
 
-            return new PlanAlimentario(idPlanAlimentario, nombre, tipo, cantidadDias);
+            var planAlimentarioRecetas = recetas.Select((x, i) => new PlanAlimentarioReceta(idPlanAlimentario, x, (i + 1))).ToList();
+
+            return new PlanAlimentario(idPlanAlimentario, nombre, tipo, cantidadDias, planAlimentarioRecetas);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catering.Infrastructure.Handlers.OrdenTrabajo
+namespace Catering.Infrastructure.Queries.OrdenTrabajo
 {
     public class GetOrdenTrabajoByIdQueryHandler : IRequestHandler<GetOrdenTrabajoByIdQuery, GetOrdenTrabajoByIdDto?>
     {

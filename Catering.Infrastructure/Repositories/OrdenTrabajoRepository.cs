@@ -1,9 +1,14 @@
-﻿using Catering.Domain.OrdenesTrabajo;
+﻿using Catering.Domain.Clientes;
+using Catering.Domain.Contratos;
+using Catering.Domain.OrdenesTrabajo;
+using Catering.Domain.PlanAlimentario;
+using Catering.Domain.Recetas;
 using Catering.Infrastructure.DomainModel;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -22,6 +27,11 @@ namespace Catering.Infrastructure.Repositories
         {
             await _dbContext.OrdenTrabajo.AddAsync(entity);
 
+        }
+
+        public async Task AddRangeAsync(List<OrdenTrabajo> ordenes)
+        {
+            await _dbContext.OrdenTrabajo.AddRangeAsync(ordenes);
         }
 
         public async Task DeleteAsync(Guid id)
@@ -46,7 +56,6 @@ namespace Catering.Infrastructure.Repositories
             }
         }
 
-
         public Task UpdateAsync(OrdenTrabajo item)
         {
             _dbContext.OrdenTrabajo.Update(item);
@@ -54,5 +63,6 @@ namespace Catering.Infrastructure.Repositories
             return Task.CompletedTask;
 
         }
+
     }
 }

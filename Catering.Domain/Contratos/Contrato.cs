@@ -35,6 +35,14 @@ namespace Catering.Domain.Contratos
             _entregasCanceladasList = new List<ContratoEntregaCancelada>();
         }
 
+        public void UpdateEstado()
+        {
+            FechaUltimoRealizado = DateTime.Now;
+            DiasRealizados += 1;
+            Estado = (DiasRealizados == DiasContratados) ?
+                ContratoStatus.Finalizado : ContratoStatus.EnProceso;
+        }
+
         #region EntregaCancelada
         public void AddEntregaCancelada(DateTime fechaCancelada)
         {

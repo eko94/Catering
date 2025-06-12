@@ -16,12 +16,12 @@ namespace Catering.Domain.PlanAlimentario
         public PlanAlimentarioCantidadDias CantidadDias { get; private set; }
         private List<PlanAlimentarioReceta>? _recetasList { get; set; }
         public ICollection<PlanAlimentarioReceta> Recetas { get { return _recetasList; } }
-        public PlanAlimentario(Guid id, string nombre, string tipo, int cantidadDias) : base(id)
+        public PlanAlimentario(Guid id, string nombre, string tipo, int cantidadDias, List<PlanAlimentarioReceta> recetas) : base(id)
         {
             Nombre = nombre;
             Tipo = tipo;
             CantidadDias = cantidadDias;
-            _recetasList = new List<PlanAlimentarioReceta>();
+            _recetasList = recetas;
         }
 
         #region Recetas

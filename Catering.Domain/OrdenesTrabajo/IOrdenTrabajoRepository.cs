@@ -11,5 +11,6 @@ namespace Catering.Domain.OrdenesTrabajo
     {
         Task UpdateAsync(OrdenTrabajo ordenTrabajo);
         Task DeleteAsync(Guid id);
+        Task AddRangeAsync(List<OrdenTrabajo> ordenes);
     }
 }

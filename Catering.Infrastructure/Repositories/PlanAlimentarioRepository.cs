@@ -1,4 +1,5 @@
-﻿using Catering.Domain.OrdenesTrabajo;
+﻿using Catering.Domain.Abstractions;
+using Catering.Domain.OrdenesTrabajo;
 using Catering.Domain.PlanAlimentario;
 using Catering.Infrastructure.DomainModel;
 using Microsoft.EntityFrameworkCore;
@@ -46,12 +47,18 @@ namespace Catering.Infrastructure.Repositories
             }
         }
 
-
         public Task UpdateAsync(PlanAlimentario item)
         {
             _dbContext.PlanAlimentario.Update(item);
 
             return Task.CompletedTask;
         }
+
+        #region Plan Alimentario Recetas
+        public async Task AddReceta(PlanAlimentarioReceta planAlimentarioReceta)
+        {
+            await _dbContext.PlanAlimentarioReceta.AddAsync(planAlimentarioReceta);
+        }
+        #endregion
     }
 }

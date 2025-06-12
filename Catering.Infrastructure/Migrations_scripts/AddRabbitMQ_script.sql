@@ -1,7 +1,5 @@
 USE [Catering]
 
-BEGIN TRANSACTION;
-
 IF OBJECT_ID(N'[__EFMigrationsHistory]') IS NULL
 BEGIN
     CREATE TABLE [__EFMigrationsHistory] (
@@ -13,6 +11,8 @@ END;
 
 IF (SELECT MigrationId FROM [Catering].[dbo].[__EFMigrationsHistory] WHERE MigrationId = '20250607040128_AddRabbitMQ') IS NOT NULL
 	RETURN;
+
+BEGIN TRANSACTION;
 
 DELETE FROM [RecetaIngrediente]
 WHERE [IdRecetaIngrediente] = '75afd017-50b3-4feb-9aa1-6a0cc574da16';

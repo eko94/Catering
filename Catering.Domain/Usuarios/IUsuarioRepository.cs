@@ -11,5 +11,6 @@ namespace Catering.Domain.Usuarios
     {
         Task UpdateAsync(Usuario Usuario);
         Task DeleteAsync(Guid id);
+        Task<Guid> GetRandomIdCocinero();
     }
 }

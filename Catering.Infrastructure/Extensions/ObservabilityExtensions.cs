@@ -1,5 +1,7 @@
 ﻿using Catering.Application.Abstraction;
 using Catering.Infrastructure.Observability;
+using Joseco.CommunicationExternal.RabbitMQ;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -20,6 +22,18 @@ namespace Catering.Infrastructure.Extensions
             //{
             //    services.AddServicesHealthChecks();
             //}
+            return services;
+        }
+
+        private static IServiceCollection AddServicesHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        {
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
+
+            services
+                .AddHealthChecks()
+                //.AddNpgSql(connectionString)
+                .AddRabbitMqHealthCheck();
+
             return services;
         }
     }
