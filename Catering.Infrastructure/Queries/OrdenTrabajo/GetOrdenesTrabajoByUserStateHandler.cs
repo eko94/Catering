@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace Catering.Infrastructure.Queries.OrdenTrabajo
 {
-    public class GetOrdenesTrabajoHandler : IRequestHandler<GetOrdenesTrabajoQuery, IEnumerable<GetOrdenesTrabajoDto>>
+    public class GetOrdenesTrabajoByUserStateHandler : IRequestHandler<GetOrdenesTrabajoByUserStateQuery, IEnumerable<GetOrdenesTrabajoByUserStateDto>>
     {
         private readonly StoredDbContext _dbContext;
 
-        public GetOrdenesTrabajoHandler(StoredDbContext dbContext)
+        public GetOrdenesTrabajoByUserStateHandler(StoredDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<GetOrdenesTrabajoDto>> Handle(GetOrdenesTrabajoQuery request, CancellationToken cancellationToken)
+        public async Task<IEnumerable<GetOrdenesTrabajoByUserStateDto>> Handle(GetOrdenesTrabajoByUserStateQuery request, CancellationToken cancellationToken)
         {
             return await _dbContext.OrdenTrabajo.AsNoTracking()
                 .Where(x => 
                     (x.IdUsuarioCocinero == request.idUsuario || request.idUsuario == Guid.Empty)
                     && (x.Estado == request.status || string.IsNullOrEmpty(request.status)))
-                .Select(x => new GetOrdenesTrabajoDto()
+                .Select(x => new GetOrdenesTrabajoByUserStateDto()
                 {
                     Id = x.Id,
                     Cantidad= x.Cantidad,

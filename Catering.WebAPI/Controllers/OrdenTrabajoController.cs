@@ -2,6 +2,7 @@
 using Catering.Application.OrdenesTrabajo.CrearOrden;
 using Catering.Application.OrdenesTrabajo.EmpaquetarComidas;
 using Catering.Application.OrdenesTrabajo.EtiquetarComidas;
+using Catering.Application.OrdenesTrabajo.GetOrdenesTrabajo;
 using Catering.Application.OrdenesTrabajo.GetOrdenTrabajoById;
 using Catering.Application.OrdenesTrabajo.PrepararReceta;
 using MediatR;
@@ -106,6 +107,22 @@ namespace Catering.WebAPI.Controllers
             try
             {
                 var result = await _mediator.Send(new GetOrdenTrabajoByIdQuery(id));
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                SentrySdk.CaptureException(ex);
+                return StatusCode(500);
+            }
+        }
+
+        [HttpGet]
+        [Route("obtener-por-usuario-estado")]
+        public async Task<IActionResult> GetTransactionByUserState([FromRoute] Guid idUsuario, string estado)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetOrdenesTrabajoByUserStateQuery(idUsuario, estado));
                 return Ok(result);
             }
             catch (Exception ex)

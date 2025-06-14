@@ -17,7 +17,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
         public async Task GetOrdenesTrabajoDtoCreacionEsValido()
         {
             // Arrange
-            GetOrdenesTrabajoDto dto = new GetOrdenesTrabajoDto();
+            GetOrdenesTrabajoByUserStateDto dto = new GetOrdenesTrabajoByUserStateDto();
             Guid id = Guid.NewGuid();
             string usuarioCocineroNombre = "Cocinero";
             string recetaNombre = "receta";
@@ -50,7 +50,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             string status = "Creado";
 
             //Act            
-            GetOrdenesTrabajoQuery query = new GetOrdenesTrabajoQuery(id, status);
+            GetOrdenesTrabajoByUserStateQuery query = new GetOrdenesTrabajoByUserStateQuery(id, status);
 
             //Assert
             Assert.Equal(id, query.idUsuario);

@@ -1,6 +1,6 @@
 ﻿namespace Catering.Application.OrdenesTrabajo.GetOrdenesTrabajo
 {
-    public class GetOrdenesTrabajoDto
+    public class GetOrdenesTrabajoByUserStateDto
     {
         public Guid Id { get; set; }
         public string UsuarioCocineroNombre { get; set; }

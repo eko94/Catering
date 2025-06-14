@@ -8,5 +8,5 @@ using System.Threading.Tasks;
 
 namespace Catering.Application.OrdenesTrabajo.GetOrdenesTrabajo
 {
-    public record GetOrdenesTrabajoQuery(Guid idUsuario, string status) : IRequest<IEnumerable<GetOrdenesTrabajoDto>>;
+    public record GetOrdenesTrabajoByUserStateQuery(Guid idUsuario, string status) : IRequest<IEnumerable<GetOrdenesTrabajoByUserStateDto>>;
 }
