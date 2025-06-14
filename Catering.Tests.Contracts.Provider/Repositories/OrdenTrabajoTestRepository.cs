@@ -1,4 +1,5 @@
-﻿using Catering.Domain.OrdenesTrabajo;
+﻿using Catering.Domain.Abstractions;
+using Catering.Domain.OrdenesTrabajo;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -14,6 +15,15 @@ namespace Catering.Tests.Contracts.Provider.Repositories
         public Task AddAsync(OrdenTrabajo entity)
         {
             this._ordenes[entity.Id] = entity;
+            return Task.CompletedTask;
+        }
+
+        public Task AddRangeAsync(List<OrdenTrabajo> ordenes)
+        {
+            foreach(var orden in ordenes)
+            {
+                this._ordenes[orden.Id] = orden;
+            }
             return Task.CompletedTask;
         }
 
