@@ -19,6 +19,7 @@ using Joseco.Outbox.EFCore.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using System;
 using System.Reflection;
 
@@ -26,7 +27,8 @@ namespace Catering.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration,
+            IHostEnvironment environment, string serviceName)
         {
             services.AddMediatR(config =>
                     config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly())
@@ -34,9 +36,9 @@ namespace Catering.Infrastructure
 
             services
                 .AddSecrets(configuration)
+                .AddObservability(environment, configuration, serviceName)
                 .AddDatabase(configuration)
-                .AddRabbitMQ()
-                .AddObservability();
+                .AddRabbitMQ();
 
             services.AddAplication();
 

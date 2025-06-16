@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Nur.Store2025.Observability.Config;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,17 +13,21 @@ namespace Catering.Infrastructure.Extensions
 {
     public static class SecretExtensions
     {
+        private const string JeagerSettingsSecretName = "JaegerSettings";
+        private const string JwtOptionsSecretName = "JwtOptions";
+        private const string RabbitMqSettingsSecretName = "RabbitMqSettings";
+
         public static IServiceCollection AddSecrets(this IServiceCollection services, IConfiguration configuration)//, IHostEnvironment environment)
         {
             //bool useSecretManager = configuration.GetValue<bool>("UseSecretManager", false);
             //if (environment.IsDevelopment() && !useSecretManager)
             //{                
-                string RabbitMqSettingsSecretName = "RabbitMqSettings";
 
-                configuration
-                    .LoadAndRegister<RabbitMqSettings>(services, RabbitMqSettingsSecretName);
+            configuration
+                .LoadAndRegister<RabbitMqSettings>(services, RabbitMqSettingsSecretName)
+                .LoadAndRegister<JeagerSettings>(services, JeagerSettingsSecretName);
 
-                return services;
+            return services;
             //}
 
             //string? vaultUrl = Environment.GetEnvironmentVariable("VAULT_URL");
