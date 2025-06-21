@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace Catering.Infrastructure.Queries.Contrato
 {
-    public class GetContratosRealizarDelDiaHandler : IRequestHandler<GetContratosRealizarDelDiaQuery, IEnumerable<GetContratosRealizarDelDiaDto>>
+    public class GetContratosRealizarDelDiaQueryHandler : IRequestHandler<GetContratosRealizarDelDiaQuery, IEnumerable<GetContratosRealizarDelDiaDto>>
     {
         private readonly StoredDbContext _dbContext;
 
-        public GetContratosRealizarDelDiaHandler(StoredDbContext dbContext)
+        public GetContratosRealizarDelDiaQueryHandler(StoredDbContext dbContext)
         {
             _dbContext = dbContext;
         }

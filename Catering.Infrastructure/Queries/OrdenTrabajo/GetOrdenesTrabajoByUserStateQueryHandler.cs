@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Catering.Infrastructure.Queries.OrdenTrabajo
 {
-    public class GetOrdenesTrabajoByUserStateHandler : IRequestHandler<GetOrdenesTrabajoByUserStateQuery, IEnumerable<GetOrdenesTrabajoByUserStateDto>>
+    public class GetOrdenesTrabajoByUserStateQueryHandler : IRequestHandler<GetOrdenesTrabajoByUserStateQuery, IEnumerable<GetOrdenesTrabajoByUserStateDto>>
     {
         private readonly StoredDbContext _dbContext;
 
-        public GetOrdenesTrabajoByUserStateHandler(StoredDbContext dbContext)
+        public GetOrdenesTrabajoByUserStateQueryHandler(StoredDbContext dbContext)
         {
             _dbContext = dbContext;
         }
