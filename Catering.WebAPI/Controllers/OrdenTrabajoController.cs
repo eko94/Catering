@@ -118,7 +118,7 @@ namespace Catering.WebAPI.Controllers
 
         [HttpGet]
         [Route("obtener-por-usuario-estado")]
-        public async Task<IActionResult> GetTransactionByUserState([FromRoute] Guid idUsuario, string estado)
+        public async Task<IActionResult> GetTransactionByUserState([FromRoute] Guid idUsuario, string? estado)
         {
             try
             {
