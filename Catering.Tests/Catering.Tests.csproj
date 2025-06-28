@@ -27,4 +27,8 @@
     <ProjectReference Include="..\Catering.Infrastructure\Catering.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Infrastructure\" />
+  </ItemGroup>
+
 </Project>

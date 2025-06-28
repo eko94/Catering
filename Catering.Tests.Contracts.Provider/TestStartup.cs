@@ -12,6 +12,8 @@ using System.Text;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
+using Microsoft.Extensions.Hosting;
 
 namespace Catering.Tests.Contracts.Provider
 {
@@ -19,10 +21,10 @@ namespace Catering.Tests.Contracts.Provider
     {
 
         private readonly Startup inner;
-        public TestStartup(IConfiguration configuration)
+        public TestStartup(IConfiguration configuration, IHostEnvironment environment)
         {
 
-            this.inner = new Startup(configuration);
+            this.inner = new Startup(configuration, environment);
         }
 
         public void ConfigureServices(IServiceCollection services)

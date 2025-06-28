@@ -85,7 +85,6 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             _usuarioRepository.Verify(x => x.GetByIdAsync(idUsuarioCocinero, false), Times.Once);
             _recetaRepository.Verify(x => x.GetByIdAsync(idReceta, false), Times.Once);
             _clienteRepository.Verify(x => x.GetByIdAsync(idCliente1, false), Times.Once);
-            //_clienteRepository.Verify(x => x.GetByIdAsync(idCliente2, false), Times.Once);
             _ordenTrabajoFactory.Verify(x => x.CreateOrdenTrabajo(idUsuarioCocinero, idReceta, cantidad, clientes), Times.Once);
             _ordenTrabajoRepository.Verify(x => x.AddAsync(ordenTrabajo), Times.Once);
             _unitOfWork.Verify(x => x.CommitAsync(tcs.Token), Times.Once);

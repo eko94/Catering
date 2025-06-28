@@ -13,7 +13,7 @@ namespace Catering.Domain.Clientes
         {
             if (idCliente == Guid.Empty)
             {
-                throw new ArgumentNullException("ID Cliente no puede ser nulo", nameof(idCliente));
+                throw new ArgumentException("ID Cliente no puede ser nulo", nameof(idCliente));
             }
             if (string.IsNullOrEmpty(nombre))
             {

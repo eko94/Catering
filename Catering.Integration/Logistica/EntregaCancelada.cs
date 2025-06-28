@@ -13,7 +13,7 @@ namespace Catering.Integration.Logistica
         public Guid IdContrato { get; set; }
         public DateTime FechaCancelada { get; set; }
 
-        public EntregaCancelada(Guid id, Guid idCliente, Guid idContrato, DateTime fechaCancelada, string? correlationId = null, string? source = null)
+        public EntregaCancelada(Guid idCliente, Guid idContrato, DateTime fechaCancelada, string? correlationId = null, string? source = null)
             : base(correlationId, source)
         {
             IdCliente = idCliente;

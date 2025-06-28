@@ -58,6 +58,21 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
         }
 
         [Fact]
+        public void OrdenTrabajoCreadoEsValido()
+        {
+            // Arrange
+
+            // Act
+            var ordenTrabajo = new OrdenTrabajoCreado(_idUsuarioCocinero, _idReceta, _cantidad, _clientes);
+
+            // Assert
+            Assert.Equal(_idUsuarioCocinero, ordenTrabajo.IdUsuarioCocinero);
+            Assert.Equal(_idReceta, ordenTrabajo.IdReceta);
+            Assert.Equal(_cantidad, ordenTrabajo.Cantidad);
+            Assert.Equal(_clientes, ordenTrabajo.Clientes.ToList());
+        }
+
+        [Fact]
         public void PrepararRecetaOrdenTrabajoEsValido()
         {
             // Arrange

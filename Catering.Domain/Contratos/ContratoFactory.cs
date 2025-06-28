@@ -20,11 +20,11 @@ namespace Catering.Domain.Contratos
             }
             if (idCliente == Guid.Empty)
             {
-                throw new ArgumentNullException("Cliente no puede ser nulo", nameof(idCliente));
+                throw new ArgumentException("Cliente no puede ser nulo", nameof(idCliente));
             }
             if (idPlanAlimentario == Guid.Empty)
             {
-                throw new ArgumentNullException("Plan Alimentario no puede ser nulo", nameof(idPlanAlimentario));
+                throw new ArgumentException("Plan Alimentario no puede ser nulo", nameof(idPlanAlimentario));
             }
             if (diasContratados <= 0)
             {

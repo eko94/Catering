@@ -1,4 +1,5 @@
 ﻿using Catering.Domain.Abstractions;
+using Catering.Domain.Comidas;
 using Catering.Domain.OrdenesTrabajo.Events;
 using Joseco.Communication.External.Contracts.Services;
 using Joseco.Outbox.Contracts.Model;
@@ -21,11 +22,13 @@ namespace Catering.Application.OrdenesTrabajo.OutboxMessageHandlers
         }
 
         public async Task Handle(OutboxMessage<OrdenTrabajoFinalizado> notification, CancellationToken cancellationToken) {
+            Guid idOrdenTrabajo = notification.Content.IdOrdenTrabajo;
+
             List<Integration.Catering.OrdenTrabajoFinalizadoComida> comidas = notification.Content.Comidas.
                 Select(x => new Integration.Catering.OrdenTrabajoFinalizadoComida(x.IdComida, x.Nombre, x.IdCliente)).ToList();
-
+            
             Integration.Catering.OrdenTrabajoFinalizado message =
-                new Integration.Catering.OrdenTrabajoFinalizado(notification.Id, comidas);
+                new Integration.Catering.OrdenTrabajoFinalizado(idOrdenTrabajo, comidas);
 
             await _integrationBusService.PublishAsync(message, "orden-trabajo-finalizado");
         }

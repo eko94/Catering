@@ -10,7 +10,7 @@ BEGIN
 END;
 GO
 
-IF (SELECT MigrationId FROM [Catering].[dbo].[__EFMigrationsHistory] WHERE MigrationId = '20250608043546_AddRecetas') IS NOT NULL
+IF (SELECT MigrationId FROM [dbo].[__EFMigrationsHistory] WHERE MigrationId = '20250608043546_AddRecetas') IS NOT NULL
 	RETURN;
 
 BEGIN TRANSACTION;

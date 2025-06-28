@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catering.Application.OrdenesTrabajo.GetOrdenTrabajoById
+namespace Catering.Application.Usuarios.GetUsuarios
 {
     public class GetUsuariosDto
     {

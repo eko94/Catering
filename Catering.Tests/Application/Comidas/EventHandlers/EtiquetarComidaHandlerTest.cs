@@ -11,7 +11,7 @@ using Catering.Domain.Usuarios;
 using Moq;
 using System.Threading;
 
-namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
+namespace Catering.Tests.Application.Comidas.EventHandlers
 {
     public class EtiquetarComidaHandlerTest
     {        

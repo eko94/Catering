@@ -13,7 +13,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Catering.Application.Contratos.CrearContrato
+namespace Catering.Application.Contratos.CrearCliente
 {
     public class CrearClienteHandler : IRequestHandler<CrearClienteCommand, Guid>
     {

@@ -62,7 +62,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             Action act = () => new OrdenTrabajoFactory().CreateOrdenTrabajo(_idUsuarioCocinero, Guid.Empty, _cantidad, _clientes);
 
             // Assert
-            Assert.Throws<ArgumentNullException>(act);
+            Assert.Throws<ArgumentException>(act);
         }
 
         [Fact]

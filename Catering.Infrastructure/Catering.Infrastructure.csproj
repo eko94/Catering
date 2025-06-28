@@ -32,7 +32,6 @@
     <PackageReference Include="Nur.Store2025.Observability" Version="1.0.0" />
 
     <PackageReference Include="Nur.Store2025.Security" Version="1.0.0" />
-    <PackageReference Include="Nur.Store2025.Access.Inventory" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
