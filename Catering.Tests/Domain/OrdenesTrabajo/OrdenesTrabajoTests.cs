@@ -18,10 +18,10 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
         private Guid _idReceta = Guid.NewGuid();
         private int _cantidad = 1;
         private OrdenTrabajoType _tipo = OrdenTrabajoType.Comida;
-        private List<Guid> _clientes = new List<Guid>
+        private List<OrdenTrabajoCliente> _clientes = new List<OrdenTrabajoCliente>
         {
-            Guid.NewGuid(),
-            Guid.NewGuid()
+            new OrdenTrabajoCliente(Guid.Empty, Guid.NewGuid(),Guid.NewGuid()),
+            new OrdenTrabajoCliente(Guid.Empty, Guid.NewGuid(),Guid.NewGuid())
         };
 
         private readonly Mock<IRecetaRepository> _recetaRepository;
@@ -54,7 +54,8 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             Assert.Equal(OrdenTrabajoStatus.Creado, ordenTrabajo.Estado);
             Assert.Equal(_tipo, ordenTrabajo.Tipo);
             Assert.Empty(ordenTrabajo.Comidas);
-            Assert.Equal(_clientes, ordenTrabajo.Clientes.Select(x => x.IdCliente).ToList());
+            Assert.Equal(_clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList(),
+                ordenTrabajo.Clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList());
         }
 
         [Fact]
@@ -63,13 +64,13 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             // Arrange
 
             // Act
-            var ordenTrabajo = new OrdenTrabajoCreado(_idUsuarioCocinero, _idReceta, _cantidad, _clientes);
+            var ordenTrabajo = new OrdenTrabajoCreado(_idUsuarioCocinero, _idReceta, _cantidad, _clientes.Select(x => x.IdCliente).ToList());
 
             // Assert
             Assert.Equal(_idUsuarioCocinero, ordenTrabajo.IdUsuarioCocinero);
             Assert.Equal(_idReceta, ordenTrabajo.IdReceta);
             Assert.Equal(_cantidad, ordenTrabajo.Cantidad);
-            Assert.Equal(_clientes, ordenTrabajo.Clientes.ToList());
+            Assert.Equal(_clientes.Select(x => x.IdCliente).ToList(), ordenTrabajo.Clientes);
         }
 
         [Fact]
@@ -88,7 +89,8 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             Assert.Equal(OrdenTrabajoStatus.EnPreparacion, ordenTrabajo.Estado);
             Assert.Equal(_tipo, ordenTrabajo.Tipo);
             Assert.Empty(ordenTrabajo.Comidas);
-            Assert.Equal(_clientes, ordenTrabajo.Clientes.Select(x => x.IdCliente).ToList());
+            Assert.Equal(_clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList(),
+                ordenTrabajo.Clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList());
         }
 
         [Fact]
@@ -114,7 +116,8 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             Assert.Equal(OrdenTrabajoStatus.Empaquetado, ordenTrabajo.Estado);
             Assert.Equal(_tipo, ordenTrabajo.Tipo);
             Assert.Equal(_cantidad, ordenTrabajo.Comidas.Count);
-            Assert.Equal(_clientes, ordenTrabajo.Clientes.Select(x => x.IdCliente).ToList());
+            Assert.Equal(_clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList(),
+                ordenTrabajo.Clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList());
         }
 
         [Fact]
@@ -141,7 +144,8 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             Assert.Equal(OrdenTrabajoStatus.Finalizado, ordenTrabajo.Estado);
             Assert.Equal(_tipo, ordenTrabajo.Tipo);
             Assert.Equal(_cantidad, ordenTrabajo.Comidas.Count);
-            Assert.Equal(_clientes, ordenTrabajo.Clientes.Select(x => x.IdCliente).ToList());
+            Assert.Equal(_clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList(),
+                ordenTrabajo.Clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList());
         }
 
         [Fact]
@@ -188,7 +192,8 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             Assert.Equal(OrdenTrabajoStatus.Cancelado, ordenTrabajo.Estado);
             Assert.Equal(_tipo, ordenTrabajo.Tipo);
             Assert.Empty(ordenTrabajo.Comidas);
-            Assert.Equal(_clientes, ordenTrabajo.Clientes.Select(x => x.IdCliente).ToList());
+            Assert.Equal(_clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList(),
+                ordenTrabajo.Clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList());
         }
 
         [Fact]

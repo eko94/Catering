@@ -1,6 +1,7 @@
 ﻿using Catering.Application.OrdenesTrabajo.EmpaquetarComidas;
 using Catering.Domain.Abstractions;
 using Catering.Domain.Clientes;
+using Catering.Domain.Contratos;
 using Catering.Domain.OrdenesTrabajo;
 using Catering.Domain.Recetas;
 using Catering.Domain.Usuarios;
@@ -19,6 +20,7 @@ namespace Catering.Application.OrdenesTrabajo.CrearOrden
         private readonly IOrdenTrabajoFactory _ordenTrabajoFactory;
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IClienteRepository _clienteRepository;
+        private readonly IContratoRepository _contratoRepository;
         private readonly IRecetaRepository _recetaRepository;
         private readonly IUnitOfWork _unitOfWork;
 
@@ -26,6 +28,7 @@ namespace Catering.Application.OrdenesTrabajo.CrearOrden
             IOrdenTrabajoFactory ordenTrabajoFactory,
             IUsuarioRepository usuarioRepository,
             IClienteRepository clienteRepository,
+            IContratoRepository contratoRepository,
             IRecetaRepository recetaRepository,
             IUnitOfWork unitOfWork)
         {
@@ -33,6 +36,7 @@ namespace Catering.Application.OrdenesTrabajo.CrearOrden
             _ordenTrabajoFactory = ordenTrabajoFactory;
             _usuarioRepository = usuarioRepository;
             _clienteRepository = clienteRepository;
+            _contratoRepository = contratoRepository;
             _recetaRepository = recetaRepository;
             _unitOfWork = unitOfWork;            
         }
@@ -51,18 +55,30 @@ namespace Catering.Application.OrdenesTrabajo.CrearOrden
                 throw new ArgumentException("Receta no es válida");
             }
 
-            List<Guid> clientes = new List<Guid>();
-            foreach(var idCliente in request.clientes)
+            List<OrdenTrabajoCliente> ordenClientes = new List<OrdenTrabajoCliente>();
+            foreach(var ordenCliente in request.ordenClientes)
             {
-                var cliente = await _clienteRepository.GetByIdAsync(idCliente);
+                var cliente = await _clienteRepository.GetByIdAsync(ordenCliente.idCliente);
                 if(cliente == null)
                 {
                     throw new ArgumentException("Cliente no es válido");
                 }
-                clientes.Add(cliente.Id);
+
+                var contrato = await _contratoRepository.GetByIdAsync(ordenCliente.idContrato);
+                if(contrato == null)
+                {
+                    throw new ArgumentException("Contrato no es válido");
+                }
+                if(contrato.IdCliente != cliente.Id)
+                {
+                    throw new ArgumentException($"El contrato {contrato.Id} no pertenece al cliente {cliente.Id}");
+                }
+
+                var ordenClienteCreated = _ordenTrabajoFactory.CreateOrdenTrabajoCliente(ordenCliente.idCliente, ordenCliente.idContrato);
+                ordenClientes.Add(ordenClienteCreated);
             }
 
-            var orden = _ordenTrabajoFactory.CreateOrdenTrabajo(request.idUsuarioCocinero, request.idReceta, request.cantidad, clientes);
+            var orden = _ordenTrabajoFactory.CreateOrdenTrabajo(request.idUsuarioCocinero, request.idReceta, request.cantidad, ordenClientes);
 
             await _ordenTrabajoRepository.AddAsync(orden);
 

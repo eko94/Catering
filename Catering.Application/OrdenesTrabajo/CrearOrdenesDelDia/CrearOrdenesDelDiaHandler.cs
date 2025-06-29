@@ -49,8 +49,11 @@ namespace Catering.Application.OrdenesTrabajo.CrearOrdenesDelDia
 
             var ordenesTrabajo =
                (from res in contratos
-                group res by new { res.IdContrato, res.IdReceta } into g
-                select _ordenTrabajoFactory.CreateOrdenTrabajo(idCocinero, g.Key.IdReceta, g.Count(), g.Select(x => x.IdCliente).ToList()))
+                group res by res.IdReceta into g
+                //group res by new { res.IdContrato, res.IdReceta } into g
+                select _ordenTrabajoFactory.CreateOrdenTrabajo(idCocinero, g.Key, g.Count(),
+                //select _ordenTrabajoFactory.CreateOrdenTrabajo(idCocinero, g.Key.IdReceta, g.Count(), 
+                    g.Select(x => _ordenTrabajoFactory.CreateOrdenTrabajoCliente(x.IdCliente, x.IdContrato)).ToList()))
                 .ToList();
 
             foreach (var con in contratos)

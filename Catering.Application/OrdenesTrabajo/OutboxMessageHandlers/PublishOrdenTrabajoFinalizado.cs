@@ -25,7 +25,7 @@ namespace Catering.Application.OrdenesTrabajo.OutboxMessageHandlers
             Guid idOrdenTrabajo = notification.Content.IdOrdenTrabajo;
 
             List<Integration.Catering.OrdenTrabajoFinalizadoComida> comidas = notification.Content.Comidas.
-                Select(x => new Integration.Catering.OrdenTrabajoFinalizadoComida(x.IdComida, x.Nombre, x.IdCliente)).ToList();
+                Select(x => new Integration.Catering.OrdenTrabajoFinalizadoComida(x.IdComida, x.Nombre, x.IdCliente, x.IdContrato)).ToList();
             
             Integration.Catering.OrdenTrabajoFinalizado message =
                 new Integration.Catering.OrdenTrabajoFinalizado(idOrdenTrabajo, comidas);

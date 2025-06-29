@@ -11,7 +11,7 @@ namespace Catering.Domain.OrdenesTrabajo
 {
     public class OrdenTrabajoFactory : IOrdenTrabajoFactory
     {
-        public OrdenTrabajo CreateOrdenTrabajo(Guid idUsuarioCocinero, Guid idReceta, int cantidad, List<Guid> clientes)
+        public OrdenTrabajo CreateOrdenTrabajo(Guid idUsuarioCocinero, Guid idReceta, int cantidad, List<OrdenTrabajoCliente> clientes)
         {
             if (idUsuarioCocinero == Guid.Empty)
             {
@@ -33,8 +33,37 @@ namespace Catering.Domain.OrdenesTrabajo
             {
                 throw new ArgumentException("Cantidad no debe ser mayor a la lista de clientes", nameof(cantidad));
             }
+            foreach(var cliente in clientes)
+            {
+                if (cliente.IdOrdenTrabajo != Guid.Empty)
+                {
+                    throw new ArgumentException("Orden Trabajo debe ser vacío", nameof(cliente.IdOrdenTrabajo));
+                }
+                if (cliente.IdCliente == Guid.Empty)
+                {
+                    throw new ArgumentException("Cliente no puede ser vacío", nameof(cliente.IdCliente));
+                }
+                if (cliente.IdContrato == Guid.Empty)
+                {
+                    throw new ArgumentException("Contrato no puede ser vacío", nameof(cliente.IdContrato));
+                }
+            }
 
             return new OrdenTrabajo(Guid.NewGuid(), idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
+        }
+
+        public OrdenTrabajoCliente CreateOrdenTrabajoCliente(Guid idCliente, Guid idContrato)
+        {
+            if (idCliente == Guid.Empty)
+            {
+                throw new ArgumentException("Cliente no puede ser vacío", nameof(idCliente));
+            }
+            if (idContrato == Guid.Empty)
+            {
+                throw new ArgumentException("Contrato no puede ser vacío", nameof(idContrato));
+            }
+
+            return new OrdenTrabajoCliente(Guid.Empty, idCliente, idContrato);
         }
     }
 }

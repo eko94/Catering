@@ -58,9 +58,9 @@ namespace Catering.Tests.Application.Comidas.EventHandlers
             string nombreReceta = "Receta 1";
             Receta receta = new Receta(idReceta, nombreReceta);
 
-            List<Guid> clientes = new List<Guid>
+            List<OrdenTrabajoCliente> clientes = new List<OrdenTrabajoCliente>
             {
-                Guid.NewGuid()
+                new OrdenTrabajoCliente(Guid.Empty, Guid.NewGuid(), Guid.NewGuid()), // Cliente 1
             };
             var ordenTrabajo = new OrdenTrabajo(idOrdenTrabajo, idUsuarioCocinero, idReceta, 1, OrdenTrabajoType.Comida, clientes);
             

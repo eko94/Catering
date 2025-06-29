@@ -24,5 +24,10 @@ namespace Catering.Infrastructure.StoredModel.Entities
         [ForeignKey("Cliente")]
         public Guid IdCliente { get; set; }
         public virtual ClienteStoredModel Cliente { get; set; }
+
+        [Required]
+        [ForeignKey("Contrato")]
+        public Guid IdContrato { get; set; }
+        public virtual ContratoStoredModel Contrato { get; set; }
     }
 }

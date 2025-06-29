@@ -13,18 +13,24 @@ namespace Catering.Domain.OrdenesTrabajo
     {
         public Guid IdOrdenTrabajo { get; private set; }
         public Guid IdCliente { get; private set; }
+        public Guid IdContrato { get; private set; }
 
-        public OrdenTrabajoCliente(Guid idOrdenTrabajo, Guid idCliente) : base(Guid.NewGuid())
+        public OrdenTrabajoCliente(Guid idOrdenTrabajo, Guid idCliente, Guid idContrato) : base(Guid.NewGuid())
         {
             IdOrdenTrabajo = idOrdenTrabajo;
             IdCliente = idCliente;
+            IdContrato = idContrato;
         }
 
-        public void Update(Guid idCliente)
+        public void Update(Guid idCliente, Guid idContrato)
         {
             if (idCliente == Guid.Empty)
             {
                 throw new ArgumentNullException("Cliente no puede ser nulo");
+            }
+            if (idContrato == Guid.Empty)
+            {
+                throw new ArgumentNullException("Contrato no puede ser nulo");
             }
 
             IdCliente = idCliente;

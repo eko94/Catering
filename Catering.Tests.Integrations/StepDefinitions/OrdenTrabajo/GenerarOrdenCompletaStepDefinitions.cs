@@ -30,15 +30,14 @@ namespace Catering.Tests.Integrations.StepDefinitions.OrdenTrabajo
             var idUsuarioCocinero = Guid.Parse(dataTable.Rows[0].Values.ElementAt(1));
             var idReceta = Guid.Parse(dataTable.Rows[1].Values.ElementAt(1));
             var cantidad = int.Parse(dataTable.Rows[2].Values.ElementAt(1));
-            List<string> clientesStr = JsonConvert.DeserializeObject<List<string>>(dataTable.Rows[3].Values.ElementAt(1));
+            var idCliente = Guid.Parse(dataTable.Rows[3].Values.ElementAt(1));
+            var idContrato = Guid.Parse(dataTable.Rows[4].Values.ElementAt(1));
 
-            List<Guid> clientes = new List<Guid>();
-            foreach(var clienteStr in clientesStr)
-            {
-                clientes.Add(Guid.Parse(clienteStr));
-            }
+            List<CrearOrdenClienteCommand> ordenClientes = new List<CrearOrdenClienteCommand> {
+                new CrearOrdenClienteCommand(idCliente, idContrato)
+            };
 
-            _crearOrdenCommand = new CrearOrdenCommand(idUsuarioCocinero, idReceta, cantidad, clientes);
+            _crearOrdenCommand = new CrearOrdenCommand(idUsuarioCocinero, idReceta, cantidad, ordenClientes);
         }
 
         [When("Crear Orden de Trabajo")]

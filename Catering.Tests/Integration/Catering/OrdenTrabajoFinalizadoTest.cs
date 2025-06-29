@@ -17,7 +17,7 @@ namespace Catering.Tests.Integration.Catering
             Guid idOrdenTrabajo = Guid.NewGuid();
             List<OrdenTrabajoFinalizadoComida> comidas = new List<OrdenTrabajoFinalizadoComida>
             {
-                new OrdenTrabajoFinalizadoComida(Guid.NewGuid(), "Pizza", Guid.NewGuid()),
+                new OrdenTrabajoFinalizadoComida(Guid.NewGuid(), "Pizza", Guid.NewGuid(), Guid.NewGuid()),
             };
 
             // Act
@@ -29,6 +29,7 @@ namespace Catering.Tests.Integration.Catering
             Assert.Equal(comidas.ElementAt(0).IdComida, orden.Comidas.First().IdComida);
             Assert.Equal(comidas.ElementAt(0).Nombre, orden.Comidas.First().Nombre);
             Assert.Equal(comidas.ElementAt(0).IdCliente, orden.Comidas.First().IdCliente);
+            Assert.Equal(comidas.ElementAt(0).IdContrato, orden.Comidas.First().IdContrato);
         }
     }
 }

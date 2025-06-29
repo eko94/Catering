@@ -62,7 +62,11 @@ namespace Catering.Tests.Contracts.Provider
                 Guid.Parse("f57a6be5-585b-4b28-88df-6ed1cd2b6ef0"),
                 1,
                 OrdenTrabajoType.Comida,
-                new List<Guid> { Guid.Parse("9b971b55-e539-4939-9240-825a48402329") }))
+                new List<OrdenTrabajoCliente> { new OrdenTrabajoCliente(
+                    Guid.Parse("5E7D8A8F-807B-42F9-BB46-5617D835B881"),
+                    Guid.Parse("9b971b55-e539-4939-9240-825a48402329"),
+                    Guid.Parse("5faf7842-e7b5-4a3f-96c8-7719d01748b9"))
+                }))
                 .GetAwaiter()
                 .GetResult();
             }            

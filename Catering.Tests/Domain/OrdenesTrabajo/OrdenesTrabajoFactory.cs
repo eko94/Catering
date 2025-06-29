@@ -17,10 +17,10 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
         private Guid _idReceta = Guid.NewGuid();
         private int _cantidad = 2;
         private OrdenTrabajoType _tipo = OrdenTrabajoType.Comida;
-        private List<Guid> _clientes = new List<Guid>
+        private List<OrdenTrabajoCliente> _clientes = new List<OrdenTrabajoCliente>
         {
-            Guid.NewGuid(),
-            Guid.NewGuid()
+            new OrdenTrabajoCliente(Guid.Empty, Guid.NewGuid(), Guid.NewGuid()),
+            new OrdenTrabajoCliente(Guid.Empty, Guid.NewGuid(), Guid.NewGuid())
         };
 
         [Fact]
@@ -38,7 +38,8 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             Assert.Equal(OrdenTrabajoStatus.Creado, ordenTrabajo.Estado);
             Assert.Equal(_tipo, ordenTrabajo.Tipo);
             Assert.Empty(ordenTrabajo.Comidas);
-            Assert.Equal(_clientes, ordenTrabajo.Clientes.Select(x => x.IdCliente).ToList());
+            Assert.Equal(_clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList(),
+                ordenTrabajo.Clientes.Select(x => new { x.IdCliente, x.IdContrato }).ToList());
         }
 
         [Fact]
@@ -83,7 +84,7 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
             // Arrange
 
             // Act
-            Action act = () => new OrdenTrabajoFactory().CreateOrdenTrabajo(_idUsuarioCocinero, _idReceta, _cantidad, new List<Guid>());
+            Action act = () => new OrdenTrabajoFactory().CreateOrdenTrabajo(_idUsuarioCocinero, _idReceta, _cantidad, new List<OrdenTrabajoCliente>());
 
             // Assert
             Assert.Throws<ArgumentException>(act);

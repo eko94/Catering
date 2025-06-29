@@ -127,15 +127,18 @@ this.ScenarioInitialize(scenarioInfo);
                             "Cantidad",
                             "5"});
                 table3.AddRow(new string[] {
-                            "Clientes",
-                            "[ \"9b971b55-e539-4939-9240-825a48402329\" ]"});
+                            "Cliente",
+                            "9b971b55-e539-4939-9240-825a48402329"});
+                table3.AddRow(new string[] {
+                            "Contrato",
+                            "5faf7842-e7b5-4a3f-96c8-7719d01748b9"});
 #line 11
  await testRunner.GivenAsync("Datos para una nueva Orden de Trabajo", ((string)(null)), table3, "Given ");
 #line hidden
-#line 17
+#line 18
  await testRunner.WhenAsync("Crear Orden de Trabajo", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 18
+#line 19
  await testRunner.ThenAsync("Orden de Trabajo creado con exito", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -150,7 +153,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Preparar Receta", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 20
+#line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -160,13 +163,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 21
+#line 22
  await testRunner.GivenAsync("Orden de Trabajo creado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 22
+#line 23
  await testRunner.WhenAsync("Preparar la Receta de la Orden", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 23
+#line 24
  await testRunner.ThenAsync("Receta preparada con éxito", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -181,7 +184,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Empaquetar Comidas", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 25
+#line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -191,13 +194,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 26
+#line 27
  await testRunner.GivenAsync("Orden de Trabajo preparado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 27
+#line 28
  await testRunner.WhenAsync("Empaquetar las Comidas de la Orden", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 28
+#line 29
  await testRunner.ThenAsync("Comidas empaquetadas con éxito", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -212,7 +215,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Etiquetar Comidas", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 30
+#line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -222,13 +225,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 31
+#line 32
  await testRunner.GivenAsync("Comidas empaquetadas", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 32
+#line 33
  await testRunner.WhenAsync("Etiquetar las Comidas de la Orden", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 33
+#line 34
  await testRunner.ThenAsync("Comidas etiquetadas con éxito", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

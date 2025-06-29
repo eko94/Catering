@@ -125,15 +125,18 @@ this.ScenarioInitialize(scenarioInfo);
                             "Cantidad",
                             "5"});
                 table1.AddRow(new string[] {
-                            "Clientes",
-                            "[ \"9b971b55-e539-4939-9240-825a48402329\" ]"});
+                            "Cliente",
+                            "9b971b55-e539-4939-9240-825a48402329"});
+                table1.AddRow(new string[] {
+                            "Contrato",
+                            "5faf7842-e7b5-4a3f-96c8-7719d01748b9"});
 #line 7
  await testRunner.GivenAsync("Datos para una nueva Orden de Trabajo para cancelar", ((string)(null)), table1, "Given ");
 #line hidden
-#line 13
+#line 14
  await testRunner.WhenAsync("Crear Orden de Trabajos", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 14
+#line 15
  await testRunner.ThenAsync("Orden de Trabajo creado con exito para cancelar", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -148,7 +151,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Cancelar Orden creada", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 16
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -158,13 +161,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 17
+#line 18
  await testRunner.GivenAsync("Orden de Trabajo creado para cancelar", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 18
+#line 19
  await testRunner.WhenAsync("Cancelar la Orden creada", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 20
  await testRunner.ThenAsync("Orden cancelada con éxito", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

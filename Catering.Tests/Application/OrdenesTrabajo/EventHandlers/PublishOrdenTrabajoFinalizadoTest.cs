@@ -36,8 +36,8 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             var publisher = new Mock<IExternalPublisher>();
             var handler = new PublishOrdenTrabajoFinalizado(publisher.Object);
 
-            var comida1 = new OrdenTrabajoFinalizadoComida(Guid.NewGuid(), "Pizza", Guid.NewGuid());
-            var comida2 = new OrdenTrabajoFinalizadoComida(Guid.NewGuid(), "Pasta", Guid.NewGuid());
+            var comida1 = new OrdenTrabajoFinalizadoComida(Guid.NewGuid(), "Pizza", Guid.NewGuid(), Guid.NewGuid());
+            var comida2 = new OrdenTrabajoFinalizadoComida(Guid.NewGuid(), "Pasta", Guid.NewGuid(), Guid.NewGuid());
             var comidas = new List<OrdenTrabajoFinalizadoComida> { comida1, comida2 };
 
             Guid idOrdenTrabajo = Guid.NewGuid();
@@ -66,9 +66,11 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
                         msg.Comidas.ElementAt(0).IdComida == comida1.IdComida &&
                         msg.Comidas.ElementAt(0).Nombre == comida1.Nombre &&
                         msg.Comidas.ElementAt(0).IdCliente == comida1.IdCliente &&
+                        msg.Comidas.ElementAt(0).IdContrato == comida1.IdContrato &&
                         msg.Comidas.ElementAt(1).IdComida == comida2.IdComida &&
                         msg.Comidas.ElementAt(1).Nombre == comida2.Nombre &&
-                        msg.Comidas.ElementAt(1).IdCliente == comida2.IdCliente
+                        msg.Comidas.ElementAt(1).IdCliente == comida2.IdCliente &&
+                        msg.Comidas.ElementAt(1).IdContrato == comida2.IdContrato
                     ),
                     "orden-trabajo-finalizado",
                     false

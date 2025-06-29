@@ -1,5 +1,6 @@
 ﻿using Catering.Domain.Abstractions;
 using Catering.Domain.Comidas;
+using Catering.Domain.Contratos;
 using Catering.Domain.Ingredientes;
 using Catering.Domain.OrdenesTrabajo;
 using Catering.Domain.Recetas;
@@ -51,8 +52,20 @@ namespace Catering.Infrastructure.StoredModel
             modelBuilder.AddOutboxModel<DomainEvent>();
 
             // Seed data for Cliente
+            var idCliente = Guid.Parse("9b971b55-e539-4939-9240-825a48402329");
             modelBuilder.Entity<ClienteStoredModel>().HasData(
-                new ClienteStoredModel { Id = Guid.Parse("9b971b55-e539-4939-9240-825a48402329"), Nombre = "Cliente Test" }
+                new ClienteStoredModel { Id = idCliente, Nombre = "Cliente Test" }
+            );
+
+            // Seed data for PlanAlimentario
+            var idPlanAlimentario = Guid.Parse("b1c8f0d2-3c4e-4f5a-9b6c-7d8e9f0a1b2c");
+            modelBuilder.Entity<PlanAlimentarioStoredModel>().HasData(
+                new PlanAlimentarioStoredModel { Id = idPlanAlimentario, Nombre = "Plan Alimentario Test", Tipo = "Tipo del plan alimentario test", CantidadDias = 15 }
+            );
+
+            // Seed data for Contrato
+            modelBuilder.Entity<ContratoStoredModel>().HasData(
+                new ContratoStoredModel { Id = Guid.Parse("5faf7842-e7b5-4a3f-96c8-7719d01748b9"), IdCliente = idCliente, IdPlanAlimentario = idPlanAlimentario, DiasContratados = 15, DiasRealizados = 0, Estado = nameof(ContratoStatus.Iniciado), FechaInicio = DateTime.Today }
             );
 
             // Seed data for Ingrediente

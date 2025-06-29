@@ -25,14 +25,16 @@ namespace Catering.Integration.Catering
         public Guid IdComida { get; set; }
         public string Nombre { get; set; }
         public Guid IdCliente { get; set; }
+        public Guid IdContrato { get; set; }
 
         //public OrdenTrabajoFinalizadoComida(Guid id, string nombre, Guid idCliente, string? correlationId = null, string? source = null)
         //    : base(correlationId, source)
-        public OrdenTrabajoFinalizadoComida(Guid id, string nombre, Guid idCliente)
+        public OrdenTrabajoFinalizadoComida(Guid id, string nombre, Guid idCliente, Guid idContrato)
         {
             this.IdComida = id;
             this.Nombre = nombre;
             this.IdCliente = idCliente;
+            this.IdContrato = idContrato;
         }
     }
 }

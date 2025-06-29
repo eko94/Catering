@@ -17,6 +17,7 @@ namespace Catering.Tests.Domain.Comidas
         private Guid _ingrediente3 = Guid.NewGuid();
         private int _ingredientes3Cantidad = 1;        
         private Guid _idCliente = Guid.NewGuid();
+        private Guid _idContrato = Guid.NewGuid();
 
         [Fact]
         public void CreacionComidaEsValido()
@@ -115,7 +116,7 @@ namespace Catering.Tests.Domain.Comidas
             var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
             comida.Preparar(ingredientes);
             comida.Empaquetar();
-            comida.Etiquetar(_idCliente);
+            comida.Etiquetar(_idCliente, _idContrato);
 
             // Assert
             Assert.Equal(_idComida, comida.Id);
@@ -139,7 +140,7 @@ namespace Catering.Tests.Domain.Comidas
             // Act
             var comida = new Comida(_idComida, _nombre, _idOrdenTrabajo);
             comida.Preparar(ingredientes);
-            Action act = () => comida.Etiquetar(_idCliente);
+            Action act = () => comida.Etiquetar(_idCliente, _idContrato);
 
             // Assert
             Assert.Throws<InvalidOperationException>(act);

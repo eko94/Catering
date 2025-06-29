@@ -6,6 +6,7 @@ using Catering.Application.Receta.EventHandlers;
 using Catering.Domain.Abstractions;
 using Catering.Domain.Clientes;
 using Catering.Domain.Comidas;
+using Catering.Domain.Contratos;
 using Catering.Domain.OrdenesTrabajo;
 using Catering.Domain.OrdenesTrabajo.Events;
 using Catering.Domain.Recetas;
@@ -21,6 +22,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
         private readonly Mock<IOrdenTrabajoFactory> _ordenTrabajoFactory;
         private readonly Mock<IUsuarioRepository> _usuarioRepository;
         private readonly Mock<IClienteRepository> _clienteRepository;
+        private readonly Mock<IContratoRepository> _contratoRepository;
         private readonly Mock<IRecetaRepository> _recetaRepository;
         private readonly Mock<IComidaRepository> _comidaRepository;
         private readonly Mock<IComidaFactory> _comidaFactory;
@@ -32,6 +34,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             _ordenTrabajoFactory = new Mock<IOrdenTrabajoFactory>();
             _usuarioRepository = new Mock<IUsuarioRepository>();
             _clienteRepository = new Mock<IClienteRepository>();
+            _contratoRepository = new Mock<IContratoRepository>();
             _recetaRepository = new Mock<IRecetaRepository>();
             _comidaRepository = new Mock<IComidaRepository>();
             _comidaFactory = new Mock<IComidaFactory>();
@@ -64,10 +67,20 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             Guid idCliente2 = Guid.NewGuid();
             string nombreCliente2 = "Cliente 2";
             Cliente cliente2 = new Cliente(idCliente2, nombreCliente2);
-            List<Guid> clientes = new List<Guid>
+
+            Guid idOrden = Guid.NewGuid();
+            Contrato contrato1 = new Contrato(Guid.NewGuid(), idCliente1, Guid.NewGuid(), 15, DateTime.Today.AddDays(1));
+            Contrato contrato2 = new Contrato(Guid.NewGuid(), idCliente2, Guid.NewGuid(), 15, DateTime.Today.AddDays(1));
+
+            List<OrdenTrabajoCliente> clientes = new List<OrdenTrabajoCliente>
             {
-                cliente1.Id,
-                cliente2.Id
+                new OrdenTrabajoCliente(idOrden, cliente1.Id, contrato1.Id),
+                new OrdenTrabajoCliente(idOrden, cliente2.Id, contrato2.Id)
+            };
+            List<CrearOrdenClienteCommand> ordenClientes = new List<CrearOrdenClienteCommand>
+            {
+                new CrearOrdenClienteCommand(cliente1.Id, contrato1.Id),
+                new CrearOrdenClienteCommand(cliente2.Id, contrato2.Id)
             };
 
             _clienteRepository.Setup(x => x.GetByIdAsync(idCliente1, false))
@@ -75,12 +88,21 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             _clienteRepository.Setup(x => x.GetByIdAsync(idCliente2, false))
                 .ReturnsAsync(cliente2);
 
+            _contratoRepository.Setup(x => x.GetByIdAsync(contrato1.Id, false))
+                .ReturnsAsync(contrato1);
+            _contratoRepository.Setup(x => x.GetByIdAsync(contrato2.Id, false))
+                .ReturnsAsync(contrato2);
 
             int cantidad = 1;
-            OrdenTrabajo ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
+            OrdenTrabajo ordenTrabajo = new OrdenTrabajo(idOrden, idUsuarioCocinero, idReceta, cantidad, OrdenTrabajoType.Comida, clientes);
 
             _ordenTrabajoFactory.Setup(x => x.CreateOrdenTrabajo(idUsuarioCocinero, idReceta, cantidad, clientes))
                 .Returns(ordenTrabajo);
+            _ordenTrabajoFactory.Setup(x => x.CreateOrdenTrabajoCliente(clientes[0].IdCliente, clientes[0].IdContrato))
+                .Returns(clientes[0]);
+            _ordenTrabajoFactory.Setup(x => x.CreateOrdenTrabajoCliente(clientes[1].IdCliente, clientes[1].IdContrato))
+                .Returns(clientes[1]);
+
             _ordenTrabajoRepository.Setup(x => x.AddAsync(ordenTrabajo));
             _ordenTrabajoRepository.Setup(x => x.GetByIdAsync(ordenTrabajo.Id, false))
                 .ReturnsAsync(ordenTrabajo);
@@ -100,7 +122,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             _comidaRepository.Setup(x => x.AddAsync(comidaPreparada));
 
 
-            CrearOrdenHandler crearOrdenHandler = new CrearOrdenHandler(_ordenTrabajoRepository.Object, _ordenTrabajoFactory.Object, _usuarioRepository.Object, _clienteRepository.Object, _recetaRepository.Object, _unitOfWork.Object);
+            CrearOrdenHandler crearOrdenHandler = new CrearOrdenHandler(_ordenTrabajoRepository.Object, _ordenTrabajoFactory.Object, _usuarioRepository.Object, _clienteRepository.Object, _contratoRepository.Object, _recetaRepository.Object, _unitOfWork.Object);
             PrepararRecetaHandler prepararRecetaHandler = new PrepararRecetaHandler(_ordenTrabajoRepository.Object, _recetaRepository.Object, _unitOfWork.Object);
             PrepararRecetaCuandoOrdenTrabajoEnPreparacionHandler prepararRecetaCuandoOrdenTrabajoEnPreparacionHandler = new PrepararRecetaCuandoOrdenTrabajoEnPreparacionHandler(_recetaRepository.Object, _ordenTrabajoRepository.Object, _unitOfWork.Object, _comidaRepository.Object, _comidaFactory.Object);
             EmpaquetarComidasHandler empaquetarOrdenHandler = new EmpaquetarComidasHandler(_ordenTrabajoRepository.Object, _unitOfWork.Object);
@@ -109,7 +131,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             var tcs = new CancellationTokenSource(1000);
 
             //Act
-            await crearOrdenHandler.Handle(new CrearOrdenCommand(idUsuarioCocinero, idReceta, cantidad, clientes), tcs.Token);
+            await crearOrdenHandler.Handle(new CrearOrdenCommand(idUsuarioCocinero, idReceta, cantidad, ordenClientes), tcs.Token);
             await prepararRecetaHandler.Handle(new PrepararRecetaCommand(ordenTrabajo.Id), tcs.Token);
             await prepararRecetaCuandoOrdenTrabajoEnPreparacionHandler.Handle(new OrdenTrabajoEnPreparacionEvent(ordenTrabajo.Id, ordenTrabajo.IdReceta, ordenTrabajo.Cantidad), tcs.Token);
             await empaquetarOrdenHandler.Handle(new EmpaquetarComidasCommand(ordenTrabajo.Id), tcs.Token);

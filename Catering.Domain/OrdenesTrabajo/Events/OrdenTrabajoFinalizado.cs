@@ -10,5 +10,5 @@ namespace Catering.Domain.OrdenesTrabajo.Events
 {
     public record OrdenTrabajoFinalizado(Guid IdOrdenTrabajo, ICollection<OrdenTrabajoFinalizadoComida> Comidas) : DomainEvent;
 
-    public record OrdenTrabajoFinalizadoComida(Guid IdComida, string Nombre, Guid IdCliente);
+    public record OrdenTrabajoFinalizadoComida(Guid IdComida, string Nombre, Guid IdCliente, Guid IdContrato);
 }

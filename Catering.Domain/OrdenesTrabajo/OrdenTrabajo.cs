@@ -26,7 +26,7 @@ namespace Catering.Domain.OrdenesTrabajo
         public DateTime FechaCreado { get; private set; }
 
 
-        public OrdenTrabajo(Guid id, Guid idUsuarioCocinero, Guid idReceta, int cantidad, OrdenTrabajoType tipo, List<Guid> clientes) : base(id)
+        public OrdenTrabajo(Guid id, Guid idUsuarioCocinero, Guid idReceta, int cantidad, OrdenTrabajoType tipo, List<OrdenTrabajoCliente> clientes) : base(id)
         {
             IdUsuarioCocinero = idUsuarioCocinero;
             IdReceta = idReceta;
@@ -34,7 +34,7 @@ namespace Catering.Domain.OrdenesTrabajo
             Estado = OrdenTrabajoStatus.Creado;
             Tipo = tipo;
             _comidasList = new List<Comida>();
-            _clientesList = clientes.Select(cliente => new OrdenTrabajoCliente(Id, cliente)).ToList();
+            _clientesList = clientes.Select(cliente => new OrdenTrabajoCliente(Id, cliente.IdCliente, cliente.IdContrato)).ToList();
             FechaCreado = DateTime.Now;
         }
 
@@ -91,16 +91,20 @@ namespace Catering.Domain.OrdenesTrabajo
             if (_comidasList == null || _comidasList.Count <= 0)
             {
                 throw new InvalidOperationException($"La orden de trabajo no cuenta con ninguna comida empaquetada");
+            }            
+            if (_clientesList == null || _clientesList.Count <= 0)
+            {
+                throw new InvalidOperationException($"La orden de clientes se encuentra vacía");
             }
 
             for (var i = 0; i < _comidasList.Count; i++)
             {
                 var comida = _comidasList[i];
-                comida.Etiquetar(_clientesList[i].IdCliente);
+                comida.Etiquetar(_clientesList[i].IdCliente, _clientesList[i].IdContrato);
             }
 
             List<OrdenTrabajoFinalizadoComida> ordenTrabajoFinalizadoComidas = _comidasList.Select(x => new OrdenTrabajoFinalizadoComida
-                (x.Id, x.Nombre, x.IdCliente.Value)).ToList();
+                (x.Id, x.Nombre, x.IdCliente.Value, x.IdContrato.Value)).ToList();
             OrdenTrabajoFinalizado ordenTrabajoFinalizado = new OrdenTrabajoFinalizado(Id, ordenTrabajoFinalizadoComidas);
             AddDomainEvent(ordenTrabajoFinalizado);
 

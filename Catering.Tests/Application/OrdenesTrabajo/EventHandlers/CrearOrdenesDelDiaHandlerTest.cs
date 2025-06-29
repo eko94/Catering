@@ -59,7 +59,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             };
 
             var idCocinero = Guid.NewGuid();
-            var ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), idCocinero, contratos[0].IdReceta, 1, OrdenTrabajoType.Comida, new List<Guid> { contratos[0].IdCliente });
+            var ordenTrabajo = new OrdenTrabajo(Guid.NewGuid(), idCocinero, contratos[0].IdReceta, 1, OrdenTrabajoType.Comida, new List<OrdenTrabajoCliente> { new OrdenTrabajoCliente(Guid.Empty, contratos[0].IdCliente, contratos[0].IdContrato) });
 
             _mediator.Setup(m => m.Send(It.IsAny<GetContratosRealizarDelDiaQuery>(), It.IsAny<CancellationToken>()))
                 .ReturnsAsync(contratos);
@@ -67,7 +67,7 @@ namespace Catering.Tests.Application.OrdenesTrabajo.EventHandlers
             _usuarioRepository.Setup(r => r.GetRandomIdCocinero())
                 .ReturnsAsync(idCocinero);
 
-            _ordenTrabajoFactory.Setup(f => f.CreateOrdenTrabajo(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<List<Guid>>()))
+            _ordenTrabajoFactory.Setup(f => f.CreateOrdenTrabajo(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<int>(), It.IsAny<List<OrdenTrabajoCliente>>()))
                 .Returns(ordenTrabajo);
 
             _contratoRepository.Setup(r => r.GetByIdAsync(It.IsAny<Guid>(), false))

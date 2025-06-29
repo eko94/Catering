@@ -43,6 +43,10 @@ namespace Catering.Infrastructure.DomainModel.Config
             builder.Property(x => x.IdOrdenTrabajo)
                  .HasColumnName("IdOrdenTrabajo");
 
+            builder.Property(x => x.IdContrato)
+                 .HasColumnName("IdContrato")
+                 .IsRequired(false);
+
             //builder.HasOne<Cliente>()
             //    .WithMany()
             //    .HasForeignKey(x => x.IdCliente)

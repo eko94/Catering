@@ -14,6 +14,7 @@ namespace Catering.Domain.Comidas
         public ComidaStatus Estado { get; private set; }
         public Guid? IdCliente { get; private set; }
         public Guid IdOrdenTrabajo { get; private set; }
+        public Guid? IdContrato { get; private set; }
 
         public Comida(Guid id, string nombre, Guid idOrdenTrabajo) : base(id)
         {
@@ -21,6 +22,7 @@ namespace Catering.Domain.Comidas
             Estado = ComidaStatus.PorPreparar;
             IdCliente = default;
             IdOrdenTrabajo = idOrdenTrabajo;
+            IdContrato = default;
         }
 
         public void Preparar(List<Recetas.RecetaIngrediente> ingredientes)
@@ -43,18 +45,23 @@ namespace Catering.Domain.Comidas
             Estado = ComidaStatus.Empaquetado;
         }
 
-        public void Etiquetar(Guid idCliente)
+        public void Etiquetar(Guid idCliente, Guid idContrato)
         {
             if (Estado != ComidaStatus.Empaquetado)
             {
                 throw new InvalidOperationException("Solo se puede etiquetar una comida que esté empaquetada.");
             }
-            if(idCliente == null)
+            if(idCliente == Guid.Empty)
             {
-                throw new InvalidOperationException("No se puede etiquetar una comida con un cliente nulo.");
+                throw new InvalidOperationException("No se puede etiquetar una comida con un cliente vacío.");
+            }
+            if(idContrato == Guid.Empty)
+            {
+                throw new InvalidOperationException("No se puede etiquetar una comida con un contrato vacío.");
             }
 
             IdCliente = idCliente;
+            IdContrato = idContrato;
 
             Estado = ComidaStatus.Etiquetado;
         }

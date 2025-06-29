@@ -126,15 +126,18 @@ this.ScenarioInitialize(scenarioInfo);
                             "Cantidad",
                             "5"});
                 table2.AddRow(new string[] {
-                            "Clientes",
-                            "[ \"9b971b55-e539-4939-9240-825a48402329\" ]"});
+                            "Cliente",
+                            "9b971b55-e539-4939-9240-825a48402329"});
+                table2.AddRow(new string[] {
+                            "Contrato",
+                            "5faf7842-e7b5-4a3f-96c8-7719d01748b9"});
 #line 7
  await testRunner.GivenAsync("Datos para una nueva Orden de Trabajo para empaquetar", ((string)(null)), table2, "Given ");
 #line hidden
-#line 13
+#line 14
  await testRunner.WhenAsync("Crear Orden de Trabajo para empaquetar", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 14
+#line 15
  await testRunner.ThenAsync("Orden de Trabajo creado con exito para empaquetar", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -149,7 +152,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Empaquetar Comidas", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 16
+#line 17
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -159,13 +162,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 17
+#line 18
  await testRunner.GivenAsync("Orden de Trabajo creado sin preparado", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 18
+#line 19
  await testRunner.WhenAsync("Empaquetar las Comidas de la Orden sin preparar", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 19
+#line 20
  await testRunner.ThenAsync("No se puede empaquetar una comidas sin preparar", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

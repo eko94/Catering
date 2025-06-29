@@ -8,15 +8,16 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
     {        
         private Guid _idOrdenTrabajo = Guid.NewGuid();
         private Guid _idCliente = Guid.NewGuid();
+        private Guid _idContrato = Guid.NewGuid();
 
         [Fact]
         public void UpdateEsValido()
         {
             // Arrange
-            OrdenTrabajoCliente reason = new OrdenTrabajoCliente(_idOrdenTrabajo, _idCliente);
+            OrdenTrabajoCliente reason = new OrdenTrabajoCliente(_idOrdenTrabajo, _idCliente, _idContrato);
 
             // Act
-            reason.Update(_idCliente);
+            reason.Update(_idCliente, _idContrato);
 
             // Assert
             Assert.Equal(reason.IdCliente, _idCliente);
@@ -26,10 +27,10 @@ namespace Catering.Tests.Domain.OrdenesTrabajo
         public void UpdateEsInvalido()
         {
             // Arrange
-            OrdenTrabajoCliente reason = new OrdenTrabajoCliente(_idOrdenTrabajo, _idCliente);
+            OrdenTrabajoCliente reason = new OrdenTrabajoCliente(_idOrdenTrabajo, _idCliente, _idContrato);
 
             // Act
-            Action act = () => reason.Update(Guid.Empty);
+            Action act = () => reason.Update(Guid.Empty, Guid.Empty);
 
             // Assert
             Assert.Throws<ArgumentNullException>(act);

@@ -11,6 +11,7 @@ namespace Catering.Domain.OrdenesTrabajo
 {
     public interface IOrdenTrabajoFactory
     {
-        OrdenTrabajo CreateOrdenTrabajo(Guid idUsuarioCocinero, Guid idReceta, int cantidad, List<Guid> clientes);
+        OrdenTrabajo CreateOrdenTrabajo(Guid idUsuarioCocinero, Guid idReceta, int cantidad, List<OrdenTrabajoCliente> clientes);
+        OrdenTrabajoCliente CreateOrdenTrabajoCliente(Guid idCliente, Guid idContrato);
     }
 }
