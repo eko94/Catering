@@ -1,0 +1,47 @@
+name: Build Docker and Deploy to DigitalOcean
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Catering Docker image
+        run: docker build -f Dockerfile -t eko1394/catering:1.0.0 .
+
+      - name: Build Catering DB Docker image
+        run: docker build -f Dockerfile-db -t eko1394/catering-db:1.0.0 .
+
+      - name: Build Catering Worker Docker image
+        run: docker build -f Dockerfile-worker -t eko1394/catering-worker:1.0.0 .
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Push Catering image
+        run: docker push eko1394/catering:1.0.0
+
+      - name: Push Catering DB image
+        run: docker push eko1394/catering-db:1.0.0
+
+      - name: Push Catering Worker image
+        run: docker push eko1394/catering-worker:1.0.0
+
+      - name: Deploy to DigitalOcean via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.DO_HOST }}
+          username: ${{ secrets.DO_USER }}
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |            
+            cd Nurtricenter
+            git pull 
+            docker compose down
+            docker compose pull
+            docker compose up -d
